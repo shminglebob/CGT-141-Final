@@ -1,0 +1,101 @@
+/* Declare fonts */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+@font-face {
+    font-family: 'Reef';
+    src: url('/static/fonts/Reef.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Declare global variables */
+:root {
+    --text-colour: #6A523A;
+    --bg-colour: #fefae0;
+    --primary-colour: #d4a373;
+    --secondary-colour: #faedcd;
+    --primary-accent-colour: #ccd5ae;
+    --secondary-accent-colour: #e9edc9;
+    --title-font: 'Indie Flower';
+    --base-font: 'Reef';
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a,
+p,
+h1,
+h2 {
+    color: var(--text-colour);
+    font-family: 'Reef', sans-serif;
+}
+
+.markdown-wrapper {
+    color: var(--text-colour) !important;
+    background-color: var(--bg-colour) !important;
+}
+
+body {
+    background-color: var(--bg-colour);
+}
+
+/* Remove scrollbar from firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* Remove scrollbar from chrome, edge & safari */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+/* Main and background css */
+main {
+    min-height: 100dvh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main h1,
+main p {
+    background-color: transparent !important;
+}
+
+#bg-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    mask-image: url('/static/images/seamless cat.png');
+    mask-repeat: repeat;
+    mask-size: 10%;
+    flex: 1;
+}
+
+#bg-overlay div {
+    position: fixed;
+    background-color: var(--primary-colour);
+    /* background-image: radial-gradient(circle, var(--primary-colour) 0%, var(--bg-colour) 80%); */
+    inset: 0;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.title {
+    font-size: 10rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.subtitle {
+    font-size: 5rem;
+}
+
+.text-mask {
+    background-clip: text;
+    mix-blend-mode: multiply;
+}

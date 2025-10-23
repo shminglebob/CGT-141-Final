@@ -1,6 +1,17 @@
 {% extends 'skeletons/base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
 {% block body %}
 {% include 'snippets/navbar.html' %}
-<h1> landing page! </h1>
+{% endblock %}
+{% block main %}
+<div>
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 90vh;">
+        <p class="title text-mask"> jeric jiang </p>
+        <p class="subtitle text-mask"> aka paidvbux </p>
+    </div>
+</div>
 {% endblock %}

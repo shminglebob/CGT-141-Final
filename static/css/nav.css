@@ -1,0 +1,17 @@
+.bg-dark,
+nav {
+    background-color: var(--primary-accent-colour) !important;
+    padding: .5rem 1rem .5rem 1rem !important;
+}
+
+nav * {
+    background-color: var(--primary-accent-colour) !important;
+    font-size: 1.5rem;
+}
+
+nav {
+    position: sticky !important;
+    top: 0;
+    /* left: 0;
+    right: 0; */
+}

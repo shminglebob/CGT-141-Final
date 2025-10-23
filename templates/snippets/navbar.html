@@ -1,9 +1,35 @@
-<nav>
-    <a href="/">home</a>
-    <a href="/about">about</a>
-    <a href="/projects">projects</a>
-    <a href="/blog">blog</a>
-    <a href="/contact">contact</a>
-    <a href="/gallery">gallery</a>
-    <a href="/resume">resume</a>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="font-family: var(--title-font); font-size: 2rem;">paidvbux</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% set links = {
+                'home' : '/',
+                'about' : '/about',
+                'projects' : '/projects',
+                'devlog' : '/devlog',
+                'contact' : '/contact',
+                'gallery' : '/gallery',
+                'resume' : '/resume',
+                } %}
+
+                {% for name, url in links.items() %}
+                <li class="nav-item">
+                    {% if active_link == name %}
+                    <a class="nav-link active" aria-current="page" href="{{ url }}">{{ name }}</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url }}">{{ name }}</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </nav>
