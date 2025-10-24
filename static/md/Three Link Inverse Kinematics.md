@@ -51,16 +51,46 @@ Using this diagram, it is much easier to see that we are essentially just solvin
 <span class="subtext">$A$ - angle opposite side length $a$</span>
 </span></a>, its very easy to see where this is going but for those of you who don't, I will explain below.
 
-Essentially, our problem trickles down to a triangle where we need to solve the internal angles of the triangle. The first step is to solve for $\theta_0$ by using the internal angle opposite from $l_2$. This internal angle, let's call it $\theta_2$, can be solved for using the <a href="https://en.wikipedia.org/wiki/Law_of_cosines" target="_blank" class="info-hover">cosine law<span class="info-box">
+Essentially, our problem trickles down to a triangle where we need to solve the internal angles of the triangle. The first step is to solve for $\theta_0$ by using the internal angle opposite from $l_2$. This internal angle, $\theta_a$, can be solved for using the <a href="https://en.wikipedia.org/wiki/Law_of_cosines" target="_blank" class="info-hover">cosine law<span class="info-box">
 <span class="info-title">Cosine law states:</span>
 <span>$a^2=b^2+c^2-2bc\cos A$</span>
 <span class="subtext">$a, b, c$ - side lengths</span>
 <span class="subtext">$A$ - angle opposite side length $a$</span>
-</span></a>.
+</span></a>. Below is a symbolic solution for $\theta_a$ and $\theta_0$.
+
+<p>
+
+$$
+\begin{align*}
+l_2^2&=d^2+l_1^2-2dl_2\cos\theta_a\\
+2dl_2\cos\theta_a&=d^2+l_1^2-l_2^2\\
+\cos\theta_a&=\frac{d^2+l_1^2-l_2^2}{2dl_2}\\
+\theta_a&=\cos^{-1}\left(\frac{d^2+l_1^2-l_2^2}{2dl_2}\right)\\
+\text{Since }\theta_a&=\theta_0+\theta_E,\text{ therefore }\theta_0=\theta_a-\theta_E
+\end{align*}
+$$
+
+</p>
 
 <span class="clear"></span>
-Next we need to calculate $\theta_1$. This is practically the same, we just reuse the cosine law. 
+Next we need to calculate $\theta_1$. This is practically the same, so just repeat the process. (If you are using degrees, swap $\pi$ for $180^\circ$)
+
+<p>
+
+$$
+\begin{align*}
+\theta_b&=\cos^{-1}\left(\frac{l_1^2+l_2^2-d^2}{2l_1l_2}\right)\\
+\text{Since }\theta_1&\text{ is the exterior angle,}\\
+\text{then }\theta_1&=\pi-\theta_b.
+\end{align*}
+$$
+
+</p>
+
+Now that we have $\theta_0$ and $\theta_1$, we can finally orient our arm to have the end effector be at the target position! Just apply the rotations onto your joints and it should work properly!
 
 ## Three Link Inverse Kinematics in 3D
+
+
 
 ## 3D Implementation in Unity

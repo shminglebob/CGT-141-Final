@@ -4,7 +4,7 @@ import markdown
 
 app = Flask(__name__)
 
-app.config['SERVER_NAME'] = 'paidvbux.com'
+# app.config['SERVER_NAME'] = 'paidvbux.com'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -55,5 +55,5 @@ def parse_md_file(path):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host="0.0.0.0")
-    # app.run(debug=True)
+    # app.run(host="0.0.0.0")
+    app.run(debug=True)
