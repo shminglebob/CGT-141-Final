@@ -1,10 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import markdown
 
 app = Flask(__name__)
 
-app.config['SERVER_NAME'] = 'paidvbux.com:80'
+app.config['SERVER_NAME'] = 'paidvbux.com'
 
 # Config (replace with your actual URI later)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -40,6 +40,10 @@ def gallery():
 @app.route('/resume')
 def resume():
     return render_template('resume.html', active_link='resume')
+
+@app.route('/test')
+def test():
+    return request.host
 
 def parse_md_file(path):
     markdown_content = f'<h1 class="subtitle">{path.split("/")[-1][:-3]}</h1>'
