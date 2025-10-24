@@ -2,8 +2,8 @@
     mask-image: var(--src);
     mask-repeat: no-repeat;
     mask-size: contain;
-    width: 20rem;
-    height: 20rem;
+    width: 25rem;
+    height: 25rem;
     background-color: var(--primary-colour);
 }
 
