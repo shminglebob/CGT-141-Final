@@ -1,16 +1,18 @@
 .bg-dark,
 nav {
-    background-color: var(--primary-accent-colour) !important;
+    background-color: var(--link-colour) !important;
     padding: .5rem 1rem .5rem 1rem !important;
 }
 
 nav * {
-    background-color: var(--primary-accent-colour) !important;
+    background-color: var(--link-colour) !important;
     font-size: 1.5rem;
     user-select: none;
 }
 
 nav {
+    box-shadow: 0px .5rem .25rem var(--shadow-colour);
+    border-bottom: solid var(--primary-accent-colour) .5rem;
     position: sticky !important;
     top: 0;
     z-index: 1;
