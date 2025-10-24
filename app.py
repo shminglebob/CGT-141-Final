@@ -12,9 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-app.logger.setLevel('DEBUG')
-
-@app.route('/', subdomain='portfolio')
+@app.route('/')
 def index():
     return render_template('index.html', active_link='home')
 
