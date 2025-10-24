@@ -4,6 +4,8 @@ import markdown
 
 app = Flask(__name__)
 
+app.config('SERVER_NAME') = 'paidvbux.com'
+
 # Config (replace with your actual URI later)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
