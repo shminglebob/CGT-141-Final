@@ -98,4 +98,13 @@ main p {
 .text-mask {
     background-clip: text;
     mix-blend-mode: multiply;
+    user-select: none;
+}
+
+.content-container {
+    border: var(--secondary-accent-colour) solid 2.5rem;
+    border-radius: 2.5rem;
+    margin: 2rem;
+    background-color: var(--bg-colour);
+    padding: 2rem;
 }

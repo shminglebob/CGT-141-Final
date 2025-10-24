@@ -24,12 +24,8 @@ def projects():
 
 @app.route('/devlog')
 def devlog():
-    markdown_content = ''
-    with open('static/md/Three Link Inverse Kinematics.md', 'r') as f:
-        markdown_content = markdown.markdown(f.read())
-        f.close()
-
-    return render_template('devlog.html', active_link='devlog', markdown_content=markdown_content)
+    return render_template('devlog.html', active_link='devlog', 
+                           markdown_content=parse_md_file('static/md/Three Link Inverse Kinematics.md'))
 
 @app.route('/contact')
 def contact():
@@ -42,6 +38,15 @@ def gallery():
 @app.route('/resume')
 def resume():
     return render_template('resume.html', active_link='resume')
+
+def parse_md_file(path):
+    markdown_content = f'<h1 class="subtitle">{path.split("/")[-1][:-3]}</h1>'
+    with open(path, 'r') as f:
+        markdown_content += markdown.markdown(f.read(), extensions=['fenced_code', 'toc'])
+        f.close()
+
+    return markdown_content
+
 
 if __name__ == '__main__':
     with app.app_context():
