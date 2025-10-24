@@ -12,6 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+app.logger.setLevel('DEBUG')
+
 @app.route('/', subdomain='portfolio')
 def index():
     return render_template('index.html', active_link='home')
@@ -48,7 +50,6 @@ def parse_md_file(path):
         f.close()
 
     return markdown_content
-
 
 if __name__ == '__main__':
     with app.app_context():
