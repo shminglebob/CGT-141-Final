@@ -7,40 +7,6 @@
     background-color: var(--primary-colour);
 }
 
-.info-hover {
-    display: inline-block;
-    position: relative;
-}
-
-.info-box {
-    position: absolute;
-    background-color: var(--bg-colour);
-    opacity: 0;
-    border-radius: .5rem;
-    border: solid var(--primary-accent-colour) .5rem;
-    padding: 1rem;
-    display: inline-block;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.info-hover:hover .info-box,
-.info-box:hover {
-    pointer-events: all;
-    opacity: 1;
-    color: var(--text-colour);
-}
-
-.info-box span {
-    text-align: left;
-    display: block;
-    line-height: 2rem;
-}
-
-.info-title {
-    text-align: center;
-}
-
 .subtext {
     font-size: 0.9rem;
 }
@@ -68,3 +34,6 @@
 .inline-block {
     display: inline-block;
 }
+
+/* .markdown-wrapper h1::after,
+.markdown-wrapper h2::after {} */
