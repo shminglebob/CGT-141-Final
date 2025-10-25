@@ -35,5 +35,9 @@
     display: inline-block;
 }
 
+mjx-container:has(>mjx-assistive-mml) {
+    font-size: 110% !important;
+}
+
 /* .markdown-wrapper h1::after,
 .markdown-wrapper h2::after {} */

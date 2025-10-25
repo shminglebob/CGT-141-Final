@@ -132,7 +132,6 @@ main p {
 
 .content-container {
     outline: var(--secondary-accent-colour) solid 2.5rem;
-    /* outline: var(--link-colour) solid 2.5rem; */
     border-radius: 2.5rem;
     margin-top: 10%;
     margin-bottom: 10%;
