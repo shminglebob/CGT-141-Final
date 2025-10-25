@@ -21,7 +21,7 @@ Now that you know what inverse kinematics is and what it's used for, we can talk
 
 ## Two Link Inverse Kinematics
 
-<div class="float-right diagram" alt="Labelled Diagram" style="--src: url('/static/images/Inverse Kinematics/Labelled Diagram.png'); margin-left: 1rem;"></div>
+<div class="float-right diagram" style="--src: url('/static/images/Inverse Kinematics/Labelled Diagram.png'); margin-left: 1rem;"></div>
 
 While this problem might seem daunting at first, it really isn't that hard of a problem to solve. This is especially apparent when we draw a diagram, but first we should know what we have and are looking for. First, what we know:
 
@@ -98,7 +98,7 @@ Now we need to talk about what we are trying to find. I moved $d$ and $\theta_E$
 
 The easiest way to understand and solve this problem is by projecting the entire equation onto a plane and solving as if it was a system in $\mathbb{R}^2$.  Projecting something onto a plane might sound scary but we can just fake it by rotating the entire system to be on the xy-plane then rotating it back after. 
 
-To do this, we do have to define another variable, $\theta_y$. Assuming that the y-axis is up, <a href="https://en.wikipedia.org/wiki/Right-hand_rule" target="_blank" class="info-hover">x-axis is left</a> and z-axis is forward, $\theta_y$ would be the angle we rotate around the y-axis. First we want to make sure that everything is calculated locally so if $O$ is not $(0,0,0)$ then it won't accidentally calculate a wrong end effector position. 
+To do this, we do have to define another variable, $\theta_y$. Assuming that the y-axis is up, <a href="https://en.wikipedia.org/wiki/Right-hand_rule" target="_blank" class="info-hover">x-axis is left<span class="info-box"><span class="info-title">Unity uses left-hand rule. The x-axis is right instead.</span></span></a> and z-axis is forward, $\theta_y$ would be the angle we rotate around the y-axis. First we want to make sure that everything is calculated locally so if $O$ is not $(0,0,0)$ then it won't accidentally calculate a wrong end effector position. 
 
 So let's define $E_L$ as the end effector position in respect to the origin's position: $E_L=E-O$. We can actually simplify this problem further into a two-link problem if we just use the up vector, $E_{up}$, and the third link length, $l_3$, to offset the entire system: $P_T=E-O-l_3E_{up}$. This gives us the local position of an intermediate target. 
 
