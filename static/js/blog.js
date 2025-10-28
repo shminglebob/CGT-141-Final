@@ -3,5 +3,7 @@ window.MathJax = {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
     },
-    svg: { fontCache: 'global' }
+    svg: {
+        fontCache: 'global',
+    }
 };

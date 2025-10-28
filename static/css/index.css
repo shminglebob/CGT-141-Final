@@ -1,0 +1,16 @@
+hr {
+    border: var(--text-colour) solid .5rem;
+    border-radius: .5rem;
+    opacity: 1;
+}
+
+.icon {
+    display: inline-block;
+    width: 6rem;
+    height: 6rem;
+    margin-top: 0.5rem;
+}
+
+.icon>* {
+    color: var(--text-colour);
+}

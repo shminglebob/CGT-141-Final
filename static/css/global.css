@@ -1,5 +1,6 @@
 /* Declare fonts */
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Indie+Flower&display=swap');
 
 @font-face {
     font-family: 'Reef';
@@ -26,6 +27,12 @@
     --base-font: 'Reef';
 }
 
+@media (max-aspect-ratio : 3/2) {
+    :root {
+        font-size: 2dvw;
+    }
+}
+
 *,
 *::before,
 *::after {
@@ -37,7 +44,7 @@ body {
 }
 
 a {
-    font-family: 'Reef', sans-serif;
+    font-family: var(--base-font), sans-serif;
 }
 
 a:not(.nav-link, .navbar-brand) {
@@ -54,12 +61,12 @@ h2,
 h3,
 li {
     color: var(--text-colour);
-    font-family: 'Reef', sans-serif;
+    font-family: var(--base-font), sans-serif;
 }
 
 p,
 li {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .markdown-wrapper {
@@ -99,29 +106,28 @@ main p {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    mask-image: url('/static/images/seamless cat.png');
+    mask-image: url('/static/images/textures/seamless cat.png');
     mask-repeat: repeat;
     mask-size: 10%;
     flex: 1;
-}
-
-#bg-overlay div {
-    opacity: 0.25;
-    position: fixed;
     background-color: var(--primary-colour);
-    inset: 0;
-    width: 100dvw;
-    height: 100dvh;
+    opacity: 0.25;
 }
 
 .title {
-    font-size: 10rem;
+    font-size: max(6rem, 6.5dvw);
     margin-bottom: 0;
     padding-bottom: 0;
+    text-shadow: .2rem .2rem var(--shadow-colour);
+    font-family: var(--title-font);
+    font-weight: 800;
 }
 
 .subtitle {
-    font-size: 5rem;
+    font-size: max(3rem, 3.25dvw);
+    text-shadow: .2rem .2rem var(--shadow-colour);
+    font-family: var(--title-font);
+    font-weight: 800;
 }
 
 .text-mask {
@@ -131,7 +137,6 @@ main p {
 }
 
 .content-container {
-    outline: var(--secondary-accent-colour) solid 2.5rem;
     border-radius: 2.5rem;
     margin-top: 10%;
     margin-bottom: 10%;
@@ -144,4 +149,10 @@ main p {
     max-width: 100dvw;
     padding: 0 !important;
     margin: 0 !important;
+}
+
+@media (min-width: 576px) {
+    .content-container {
+        outline: var(--secondary-accent-colour) solid 2.5rem;
+    }
 }

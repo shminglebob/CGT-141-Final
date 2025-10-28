@@ -2,8 +2,8 @@
     mask-image: var(--src);
     mask-repeat: no-repeat;
     mask-size: contain;
-    width: 25rem;
-    height: 25rem;
+    width: min(25rem, 50dvw);
+    height: min(25rem, 50dvw);
     background-color: var(--primary-colour);
 }
 
@@ -36,8 +36,5 @@
 }
 
 mjx-container:has(>mjx-assistive-mml) {
-    font-size: 110% !important;
+    font-size: 100% !important;
 }
-
-/* .markdown-wrapper h1::after,
-.markdown-wrapper h2::after {} */
