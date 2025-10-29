@@ -135,8 +135,8 @@ main p {
 
 .content-container {
     border-radius: 2.5rem;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin: 2.5rem 0 2.5rem 0;
+    outline: var(--secondary-accent-colour) solid 2.5rem;
     background-color: var(--bg-colour);
     padding: 2rem;
     box-shadow: 0 0 .5rem 2.75rem var(--shadow-colour);
@@ -146,10 +146,4 @@ main p {
     max-width: 100dvw;
     padding: 0 !important;
     margin: 0 !important;
-}
-
-@media (min-width: 576px) {
-    .content-container {
-        outline: var(--secondary-accent-colour) solid 2.5rem;
-    }
 }
