@@ -1,35 +1,73 @@
-.bg-dark,
-nav {
-    background-color: var(--link-colour) !important;
-    padding: .5rem 1rem .5rem 1rem !important;
+.circle-nav {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
 }
 
-nav * {
-    background-color: var(--link-colour) !important;
-    font-size: 1.5rem;
-    user-select: none;
-    font-family: var(--title-font);
+.nav-btn {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-accent-colour);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1100;
+    /* higher than .nav-links */
 }
 
-nav {
-    position: fixed !important;
+.nav-btn span {
+    width: 1.4rem;
+    height: 2px;
+    background: white;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* turn the icon into an X when active */
+.nav-btn.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-btn.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-links {
+    position: fixed;
+    height: 100dvh;
     width: 100dvw;
-    box-shadow: 0px .5rem .25rem var(--shadow-colour);
-    border-bottom: solid var(--primary-accent-colour) .5rem;
-    top: 0;
-    z-index: 1;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    background: var(--secondary-colour);
+    clip-path: circle(0% at calc(100% - 2.5rem) 2.5rem);
+    transition: clip-path 0.5s ease;
+    z-index: 1000;
 }
 
-.navbar-brand {
-    font-family: var(--title-font);
+.nav-links a {
+    color: var(--primary-colour);
     font-size: 2rem;
+    text-decoration: none;
 }
 
-.navbar-toggler {
-    border: none !important;
-    box-shadow: none !important;
-}
-
-html {
-    scroll-padding-top: 95px;
+.nav-links.open {
+    clip-path: circle(150% at calc(100% - 2.5rem) 2.5rem);
 }

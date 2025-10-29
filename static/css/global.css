@@ -44,14 +44,11 @@ body {
 }
 
 a {
+    color: var(--link-colour);
     font-family: var(--base-font), sans-serif;
 }
 
-a:not(.nav-link, .navbar-brand) {
-    color: var(--link-colour);
-}
-
-a:visited:not(.nav-link, .navbar-brand) {
+a:visited {
     color: var(--visited-link-colour);
 }
 
@@ -106,7 +103,7 @@ main p {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    mask-image: url('/static/images/textures/seamless cat.png');
+    mask-image: var(--src);
     mask-repeat: repeat;
     mask-size: 10%;
     flex: 1;

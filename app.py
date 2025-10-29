@@ -40,10 +40,6 @@ def gallery():
 def resume():
     return render_template('resume.html', active_link='resume')
 
-@app.route('/test')
-def test():
-    return request.host
-
 def parse_md_file(path):
     markdown_content = f'<h1 class="subtitle">{path.split("/")[-1][:-3]}</h1>'
     with open(path, 'r') as f:
@@ -55,5 +51,5 @@ def parse_md_file(path):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host="0.0.0.0")
-    # app.run(debug=True)
+    # app.run(host="0.0.0.0")
+    app.run(debug=True)
