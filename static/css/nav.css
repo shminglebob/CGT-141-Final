@@ -22,7 +22,6 @@
     top: 1.5rem;
     right: 1.5rem;
     z-index: 1100;
-    /* higher than .nav-links */
 }
 
 .nav-btn span {
@@ -30,8 +29,8 @@
     height: 2px;
     background: white;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
 }
-
 
 /* turn the icon into an X when active */
 .nav-btn.active span:nth-child(1) {
