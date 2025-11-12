@@ -1,20 +1,36 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
 
 <nav class="circle-nav">
-    <button id="navToggle" class="nav-btn">
+    <button id="nav-toggle" class="nav-btn">
         <span></span>
         <span></span>
     </button>
 
+    <button id="theme-toggle" aria-label="toggle theme">
+        <div>
+        </div>
+    </button>
+
+    {% set links = {
+    'home': '/',
+    'about': '/about',
+    'projects': '/projects',
+    'gallery': '/gallery',
+    'contact': '/contact',
+    'devlog': '/devlog',
+    'resume': '/resume',
+    } %}
+
+
     <ul class="nav-links">
-        <li><a href="/">home</a></li>
-        <li><a href="/about">about</a></li>
-        <li><a href="/projects">projects</a></li>
-        <li><a href="/gallery">gallery</a></li>
-        <li><a href="/contact">contact</a></li>
-        <li><a href="/devlog">devlogs</a></li>
-        <li><a href="/resume">resume</a></li>
+        {% for page in links.keys() %}
+        <li><a href="{{ links[page] }}" {% if current_page==page %}
+                style="pointer-events: none; color: var(--text-colour);" {% endif %}>{{page}}</a>
+        </li>
+        {% endfor %}
     </ul>
 </nav>
+
+<div id="theme-overlay"></div>
 
 <script src="{{ url_for('static', filename='js/nav.js') }}"></script>

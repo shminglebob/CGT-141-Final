@@ -28,7 +28,7 @@
     width: 60%;
     height: 2px;
     border-radius: .15dvh;
-    background: white;
+    background: var(--bg-colour);
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform-origin: center;
 }
@@ -63,8 +63,57 @@
     color: var(--primary-colour);
     font-size: 2rem;
     text-decoration: none;
+    user-select: none;
+}
+
+.nav-links a:hover {
+    color: var(--text-colour);
 }
 
 .nav-links.open {
-    clip-path: circle(150% at calc(100% - 2.5rem) 2.5rem);
+    clip-path: circle(200% at calc(100% - 2.5rem) 2.5rem);
+}
+
+#theme-toggle {
+    padding: 0;
+    position: fixed;
+    top: calc(2rem + 6dvh);
+    right: 1.5rem;
+    width: 5dvh;
+    height: 5dvh;
+    border: none;
+    border-radius: 50%;
+    color: var(--text-colour);
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 1000;
+
+    background-color: var(--bg-colour);
+}
+
+#theme-toggle>div {
+    inset: 0;
+    width: 5dvh;
+    height: 5dvh;
+    mask: var(--theme-icon) no-repeat center;
+    mask-size: contain;
+    background: var(--primary-colour);
+    transition: background 0.3s ease;
+}
+
+#theme-toggle div:hover {
+    background-color: var(--alt-bg-colour);
+}
+
+#theme-overlay {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    width: 100dvw;
+    clip-path: circle(0% at 100% 0%);
+    background: var(--alt-bg-colour);
+    pointer-events: none;
+    z-index: 2000;
+    opacity: 1;
+    will-change: clip-path, opacity;
 }
