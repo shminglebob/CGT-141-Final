@@ -1,0 +1,115 @@
+@media(min-aspect-ratio: 1) {
+    .content-container {
+        margin-top: 5rem;
+    }
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--secondary-colour);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform .15s ease, box-shadow .15s ease;
+    max-width: 350px;
+    margin: 1rem auto;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.project-title {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-colour);
+}
+
+.project-desc {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--text-colour);
+    opacity: 0.85;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.tag {
+    background: var(--primary-colour);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: .25rem .6rem;
+    border-radius: .5rem;
+}
+
+.project-btn {
+    margin-top: .5rem;
+    align-self: flex-start;
+    background: var(--primary-accent-colour);
+    color: #fff;
+    text-decoration: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    transition: filter .15s ease;
+}
+
+.project-card a:visited {
+    color: #fff !important;
+}
+
+.project-btn:hover {
+    filter: brightness(1.1);
+}
+
+.img-swap {
+    position: relative;
+    height: 200px;
+}
+
+.img-swap img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity .25s ease;
+}
+
+.img-swap img:last-child {
+    opacity: 0;
+}
+
+.project-card:hover img:last-child {
+    opacity: 1;
+}
+
+.project-card:hover img:first-child {
+    opacity: 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}

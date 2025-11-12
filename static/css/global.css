@@ -44,7 +44,7 @@
     --primary-colour: #6A523A;
     --secondary-colour: #1F1B17;
 
-    --primary-accent-colour: #ffffff;
+    --primary-accent-colour: #6A523A;
     --secondary-accent-colour: #6A523A;
 
     --link-colour: #ccd5ae;
@@ -55,9 +55,13 @@
     --theme-icon: url('/static/images/icons/moon.png');
 }
 
-@media (max-aspect-ratio : 3/2) {
+@media (max-aspect-ratio : 1) {
     :root {
         font-size: 2dvw;
+    }
+
+    .content-container {
+        border-radius: 0 !important;
     }
 }
 
@@ -109,17 +113,14 @@ body {
     background-color: var(--bg-colour);
 }
 
-/* Remove scrollbar from firefox */
 html {
     scrollbar-width: none;
 }
 
-/* Remove scrollbar from chrome, edge & safari */
 html::-webkit-scrollbar {
     display: none;
 }
 
-/* Main and background css */
 main {
     min-height: 100dvh;
     position: relative;
@@ -173,7 +174,8 @@ main p {
 
 .content-container {
     border-radius: 2.5rem;
-    margin: 2.5rem 0 2.5rem 0;
+    margin: 2.5rem;
+    max-width: calc(100% - 5rem);
     outline: var(--secondary-accent-colour) solid 2.5rem;
     background-color: var(--bg-colour);
     padding: 2rem;
@@ -199,64 +201,42 @@ hr {
     color: var(--alt-bg-colour);
 }
 
-form {
-    width: 80%;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: var(--secondary-colour);
-    border-radius: 2rem;
-    outline: 2rem solid var(--primary-accent-colour);
-    margin-top: 4rem;
-    margin-bottom: 4rem;
-    /* box-shadow: 0 0 1rem .5rem var(--shadow-colour); */
+.small-text {
+    font-size: 1rem;
+    opacity: .5;
+}
+
+.flash-container {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: auto;
+    max-width: 90%;
     text-align: center;
 }
 
-form p {
-    margin-bottom: 1rem;
-    font-weight: 500;
-    color: #333;
-}
-
-form input {
-    width: 80%;
-    padding: 0.6rem 0.8rem;
-    background-color: var(--bg-colour);
-    border: none;
-    outline: .25rem solid var(--primary-colour);
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color .15s ease, box-shadow .15s ease;
+.flash-message {
+    display: inline-block;
+    background: var(--secondary-colour);
     color: var(--text-colour);
-}
-
-form input::placeholder {
-    color: var(--primary-colour);
-    opacity: 75%;
-}
-
-form input:focus {
-    border-color: #4f86ff;
-    box-shadow: 0 0 0 3px rgba(79, 134, 255, .25);
-}
-
-form button {
-    margin-top: 1rem;
-    padding: 0.6rem 1.2rem;
-    border: none;
     border-radius: 8px;
-    background: #4f86ff;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: filter .15s ease, transform .1s ease;
+    padding: .75rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    animation: fadeout 3.5s forwards;
 }
 
-form button:hover {
-    filter: brightness(1.1);
-}
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
 
-form button:active {
-    transform: translateY(1px);
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

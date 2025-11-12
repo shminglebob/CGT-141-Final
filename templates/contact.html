@@ -2,6 +2,7 @@
 
 {% block head %}
 <title>Contact Me!</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -9,24 +10,39 @@
 {% endblock %}
 
 {% block content %}
-<h1>have any questions/concerns?</h1>
-<p>
-    email me at test@email.com!
-</p>
-<form id="subscription-form" onsubmit="submitSubscribeForm(event)">
-    <h2>want to receive updates whenever i decide to post something?</h2>
-    <div class="form-body">
-        <p>enter your email!</p>
-        <input type="email" id="subscription-email" placeholder="your@email.com" required><br>
+<div class="container py-3 col-md-10">
+    <h1>get in touch!</h1>
+    <div id="contact-info" class="row align-items-center justify-content-between g-5">
+        <!-- left -->
+        <div class="col-md-5">
+            <h2 class="mb-3">have any question/concerns?</h2>
+            <h3>reach me</h3>
+            <ul class="list-unstyled">
+                <li>jiangjeric@gmail.com</li>
+                <li>github.com/paidvbux</li>
+            </ul>
+            <p style="display: inline-block; margin-bottom:0;">don't worry i'll see your message!</p>
+            <p style="display: inline-block;" class="small-text">no one messages me :(</p>
+        </div>
+        <!-- right -->
+        <div class="col-md-6">
+            <form id="subscription-form" onsubmit="submitSubscribeForm(event)">
+                <h2>want to receive updates when i post?</h2>
+                <div class="form-body">
+                    <p>enter your email!</p>
+                    <input type="email" id="subscription-email" placeholder="your@email.com" required><br>
+                </div>
+                <button type="submit">submit</button>
+            </form>
+        </div>
     </div>
-    <button type="submit">submit</button>
-</form>
-<hr>
-<p class="external-links">
-    <a style="text-decoration: none;" href="https://github.com/paidvbux">github</a>
-    <span>•</span>
-    <a style="text-decoration: none;" href="https://linkedin.com/in/whatever">linkedin</a>
-</p>
+    <hr>
+    <p class="external-links">
+        <a style="text-decoration: none;" href="https://github.com/paidvbux">github</a>
+        <span>•</span>
+        <a style="text-decoration: none;" href="https://linkedin.com/in/whatever">linkedin</a>
+    </p>
+</div>
 {% endblock %}
 
 {% block footer %}

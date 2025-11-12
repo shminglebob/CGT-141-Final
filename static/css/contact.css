@@ -1,0 +1,67 @@
+:has(>.container) {
+    margin: auto;
+}
+
+.content-container {
+    border-radius: 2.5rem !important;
+}
+
+form {
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--secondary-colour);
+    border-radius: 2rem;
+    outline: 2rem solid var(--primary-accent-colour);
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+form p {
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+form input {
+    width: 80%;
+    padding: 0.6rem 0.8rem;
+    background-color: var(--bg-colour);
+    border: none;
+    outline: .25rem solid var(--primary-colour);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color .15s ease, box-shadow .15s ease;
+    color: var(--text-colour);
+}
+
+form input::placeholder {
+    color: var(--primary-colour);
+    opacity: 75%;
+}
+
+form input:focus {
+    border-color: #4f86ff;
+    box-shadow: 0 0 0 3px rgba(79, 134, 255, .25);
+}
+
+form button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background: #4f86ff;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter .15s ease, transform .1s ease;
+}
+
+form button:hover {
+    filter: brightness(1.1);
+}
+
+form button:active {
+    transform: translateY(1px);
+}

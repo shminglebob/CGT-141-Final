@@ -21,7 +21,7 @@ Now that you know what inverse kinematics is and what it's used for, we can talk
 
 ## Two-Link Inverse Kinematics
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/Inverse Kinematics/Labelled Diagram.png');"></div>
+<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Labelled Diagram.png');"></div>
 
 While this problem might seem daunting at first, it really isn't that hard of a problem to solve. This is especially apparent when we draw a diagram, but first we should know what we have and are looking for. First, what we know:
 
@@ -93,7 +93,7 @@ We also introduce some new variables so that we don't end up with infinite solut
 
 Now we need to talk about what we are trying to find. I moved $d$ and $\theta_E$ here since they are calculated fairly differently compared to their 2D counterparts.
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/Inverse Kinematics/P_T Diagram.png'); margin-left: 1rem;"></div>
+<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/P_T Diagram.png'); margin-left: 1rem;"></div>
 
 - $\theta_0,\theta_1,\theta_2$ - the calculated angles for joints 1, 2 and 3 respectively
 - $\theta_E$ - the angle on the projected plane from $O$ to $P_T$ (defined later)
@@ -140,7 +140,7 @@ We have two options from here, we can take the easy way out which leads to reall
 
 The easy way is really straightforward but the downside is that if $P_T$ isn't lying in the same plane as $O$ and $E$, then it will look very weird. If you do want to do this way and you don't really care how the system responds to the last joint's orientation, then you can quite literally just set the last joint's up vector to be $E_y$.
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/Inverse Kinematics/Theta_2 Diagram.png'); margin-left: 1rem;"></div>
+<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Theta_2 Diagram.png'); margin-left: 1rem;"></div>
 
 ### The Natural Hard Way
 
@@ -195,3 +195,4 @@ To ensure your math will work out, please rotate the angles in this specific ord
 <div class="clear"></div>
 
 #  Implementation in Unity C\#
+This will be added later for the sake of time (I need to finish this final).

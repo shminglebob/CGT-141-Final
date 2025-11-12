@@ -1,7 +1,8 @@
 {% extends 'skeletons/base.html' %}
 
 {% block head %}
-<title>Past Projects</title>
+<title>Projects</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -9,5 +10,27 @@
 {% endblock %}
 
 {% block content %}
-<h1> projects page! </h1>
+<h1> stuff i made! </h1>
+<div class="row g-4">
+    {% for slug, project_info in projects_json.items() %}
+    <div class="col-sm-12 col-md-6 col-lg-3">
+        <div class="project-card">
+            <div class="img-swap">
+                <img src="{{ url_for('static', filename='images/thumbnails/'+ slug +'/static.png') }}" alt="preview">
+                <img src="{{ url_for('static', filename='images/thumbnails/'+ slug +'/hover.gif') }}" alt="hover image">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title"> {{ project_info['title'] }} </h3>
+                <p class="project-desc"> {{ project_info['description'] }} </p>
+                <div class="project-tags">
+                    {% for tag in project_info['tags'] %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('devlog', slug=slug) }}" class="project-btn">view project →</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

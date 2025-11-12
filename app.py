@@ -1,15 +1,25 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash, current_app
 from flask_sqlalchemy import SQLAlchemy
 import markdown
+import json
+import os
 
 app = Flask(__name__)
 
-# app.config['SERVER_NAME'] = 'paidvbux.com'
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'poteto chip'
 
 db = SQLAlchemy(app)
+
+projects_json = None
+
+# read from json
+with app.app_context():
+    local_path = os.path.join(current_app.instance_path, 'projects.json')
+    with open(local_path, 'r') as f:
+        projects_json = json.loads(f.read())
+
 
 @app.route('/')
 def index():
@@ -21,12 +31,24 @@ def about():
 
 @app.route('/projects')
 def projects():
-    return render_page('projects.html', 'projects', request)
+    return render_page('projects.html', 'projects', request, projects_json=projects_json)
 
 @app.route('/devlog')
-def devlog():
-    return render_page('devlog.html', 'devlog', request,
-                           markdown_content=parse_md_file('static/md/Three Link Inverse Kinematics.md'))
+def devlog_root():
+    return redirect(url_for('projects'), code=301)
+
+@app.route('/devlog/<slug>')
+def devlog(slug):
+    theme = request.cookies.get('theme', 'light')
+    if slug not in projects_json.keys():
+        return render_template('page-not-found.html', theme=theme)
+
+    curr_devlog = projects_json[slug]
+
+    md_filename = curr_devlog['md-path']
+
+    return render_template('skeletons/devlog-base.html', theme=theme, 
+                           markdown_content=parse_md_file(f'static/md/{md_filename}'))
 
 @app.route('/contact')
 def contact():
@@ -53,7 +75,7 @@ def render_page(path, page_name, request, **kwargs):
     return render_template(path, **context)
 
 def parse_md_file(path):
-    markdown_content = f'<h1 class="subtitle">{path.split("/")[-1][:-3]}</h1>'
+    markdown_content = f'<h1 class="md-title">{path.split("/")[-1][:-3]}</h1>'
     with open(path, 'r') as f:
         markdown_content += markdown.markdown(f.read(), extensions=['fenced_code', 'toc'])
         f.close()

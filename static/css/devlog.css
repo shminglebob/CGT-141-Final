@@ -1,3 +1,8 @@
+.md-title {
+    font-size: max(3rem, 3.25dvw);
+    text-shadow: .2rem .2rem var(--shadow-colour);
+}
+
 .diagram {
     mask-image: var(--src);
     mask-repeat: no-repeat;

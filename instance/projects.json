@@ -1,0 +1,22 @@
+{
+    "inverse-kinematics": {
+        "title": "inverse kinematics in 2d and 3d",
+        "description": "inverse kinematics demonstrated in unity.",
+        "md-path": "Three Link Inverse Kinematics.md",
+        "tags": [
+            "unity",
+            "c#",
+            "math"
+        ]
+    },
+    "spider": {
+        "title": "procedural spider",
+        "description": "a procedurally animated spider built in unity.",
+        "md-path": "Procedural Spider.md",
+        "tags": [
+            "unity",
+            "c#",
+            "procedural animation"
+        ]
+    }
+}

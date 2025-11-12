@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    //  Renew cookie
+    //  Renew cookie for a year (idk if this is too long)
     document.cookie = `theme=${root.dataset.theme};path=/;max-age=31536000`;
 });
 
