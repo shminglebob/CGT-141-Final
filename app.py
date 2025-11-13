@@ -34,6 +34,7 @@ def projects():
     return render_page('projects.html', 'projects', request, projects_json=projects_json)
 
 @app.route('/devlog')
+@app.route('/devlog/')
 def devlog_root():
     return redirect(url_for('projects'), code=301)
 
@@ -41,7 +42,7 @@ def devlog_root():
 def devlog(slug):
     theme = request.cookies.get('theme', 'light')
     if slug not in projects_json.keys():
-        return render_template('page-not-found.html', theme=theme)
+        return render_template('error pages/page-not-found.html', theme=theme)
 
     curr_devlog = projects_json[slug]
 

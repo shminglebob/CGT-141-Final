@@ -1,0 +1,24 @@
+@media(min-aspect-ratio: 1) {
+    .content-container {
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+}
+
+strong {
+    font-family: var(--base-font);
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--text-colour);
+}
+
+span.small-text {
+    font-family: var(--base-font);
+    color: var(--text-colour);
+}
+
+.contact {
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+}

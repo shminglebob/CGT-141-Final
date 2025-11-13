@@ -1,6 +1,7 @@
 @media(min-aspect-ratio: 1) {
     .content-container {
         margin-top: 5rem;
+        margin-bottom: 5rem;
     }
 }
 

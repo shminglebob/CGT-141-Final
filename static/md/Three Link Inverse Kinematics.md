@@ -5,7 +5,7 @@ Forward kinematics is a way to calculate an end effector's position and rotation
 
 ## Importance of Inverse Kinematics
 
-So now the question is why do we need inverse kinematics? The simple answer to this question is we need it for very precise robotic arm movements. In fact, this is so important that even we as humans have this built into our brains!
+Why do we need inverse kinematics? The simple answer is for very precise robotic arm movements. In fact, we as humans have this built into our brains!
 
 Try it out! Use your wrist as an end effector and try to move it in a line as straight as possible. While you're doing this, you can see how your elbow bends without you even thinking about bending it. This is what we call inverse kinematics. 
 
@@ -13,11 +13,11 @@ Try it out! Use your wrist as an end effector and try to move it in a line as st
 
 Inverse kinematics is mostly used in robotics but it can be adapted for procedural animation! You might even see it already built into rigging/animation software like *Blender* where they use IK targets to move arms around. 
 
-We have many reasons for using inverse kinematics in procedural animation. I would say one of the main reasons that its great is due to its modularity, being able to be used for limbs like arms and legs. Using inverse kinematics in procedural animation is great since it can prevent problems like floating feet when walking down slopes.
+We have many reasons for using inverse kinematics in procedural animation. One of the main reasons is its modularity, being able to be used for limbs from arms to legs to even fingers!. This is especially important as it prevents problems like floating feet when walking down slopes.
 
 # The Math behind Inverse Kinematics
 
-Now that you know what inverse kinematics is and what it's used for, we can talk about the mathematics behind inverse kinematics. For the sake of my sanity, I will not be talking about the solutions for anything past a three-link solution.
+Now that we know what inverse kinematics is and what it's used for, we can talk about the mathematics behind inverse kinematics. For the sake of my sanity, I will not be talking about the solutions for anything past a three-link solution.
 
 ## Two-Link Inverse Kinematics
 
