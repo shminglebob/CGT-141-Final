@@ -22,3 +22,58 @@ span.small-text {
     justify-items: center;
     text-align: center;
 }
+
+.reach-out-container {
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.reach-out-card {
+    max-width: 600px;
+    width: 100%;
+    padding: 3rem;
+    outline: 1.5rem solid var(--primary-accent-colour);
+    border-radius: 2.5rem;
+    background: var(--secondary-colour);
+}
+
+.reach-out-card h2 {
+    margin-bottom: 0.5rem;
+}
+
+.reach-out-card .form-group {
+    margin-bottom: 1rem;
+}
+
+.reach-out-card input,
+.reach-out-card textarea {
+    width: 100%;
+    padding: 0.3rem 0.4rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+    background: var(--bg-colour);
+    border: none;
+    outline: .25rem solid var(--primary-colour);
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+    color: var(--text-colour);
+}
+
+.reach-out-card input::placeholder,
+.reach-out-card textarea::placeholder {
+    color: var(--primary-colour);
+    opacity: 75%;
+}
+
+.reach-out-btn {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: .25rem;
+    background: var(--secondary-accent-colour);
+    outline: .25rem solid var(--primary-accent-colour);
+    font-weight: 600;
+}

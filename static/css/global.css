@@ -94,7 +94,9 @@ h1,
 h2,
 h3,
 li,
-input {
+input,
+label,
+textarea {
     color: var(--text-colour);
     font-family: var(--base-font), sans-serif;
 }
@@ -240,4 +242,42 @@ hr {
     100% {
         opacity: 0;
     }
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--secondary-colour) inset;
+    -webkit-text-fill-color: var(--text-colour);
+}
+
+select {
+    width: 100%;
+    padding: 0.3rem 0.4rem;
+    background: var(--bg-colour);
+    border: none;
+    outline: .25rem solid var(--primary-colour);
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    color: var(--text-colour);
+    font-family: var(--base-font);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+select:focus-visible {
+    outline: none;
+}
+
+select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+option:focus {
+    background-color: var(--bg-colour);
 }

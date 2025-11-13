@@ -15,48 +15,19 @@
     <h1>Jeric Jiang</h1>
     <hr style="width: 75%;">
     <p class="small-text">
-        Personal: jiangjeric@gmail.com<br>
         Business: contact.jeric@paidvbux.com<br>
         Canada: +1 (365) 228-9271<br>
         US: +1 (765) 543-6244
     </p>
 </div>
 <!-- summary -->
-<h2>Summary</h2>
+<h2>What I Do</h2>
 <hr>
 <p>
     I develop interactive systems with a focus on procedural animation and procedural content generation. I'm currently
     learning to create custom editors in Unity to improve workflow and build better internal tools. I like solving
     technical problems, especially if they call for creative solutions.
 </p>
-
-<!-- skills -->
-<div class="row">
-    <div class="col-md-6">
-        <h3>Languages and Tools</h3>
-        <hr>
-        <ul>
-            <li>C# <span class="small-text">mainly in Unity (primary language)</span></li>
-            <li>Python <span class="small-text">automating small tools/scripts</span></li>
-            <li>JavaScript <span class="small-text">API calls & frontend scripting</span></li>
-            <li>HTML5 & CSS <span class="small-text">frontend structure & styling</span></li>
-            <li>Jinja2 <span class="small-text">modular HTML templates</span></li>
-            <li>Flask <span class="small-text">backend development</span></li>
-        </ul>
-    </div>
-    <div class="col-md-6">
-        <h3>Technical Skills</h3>
-        <hr>
-        <ul>
-            <li>Procedural animation & generation</li>
-            <li>Custom Unity editor tools</li>
-            <li>Gameplay systems</li>
-            <li>Inverse kinematics implementation (2D & 3D)</li>
-            <li>Backend routing & templating</li>
-            <li>Git & version control</li>
-        </ul>
-    </div>
-</div>
 
 <!-- experience -->
 <h2>Experience</h2>
@@ -97,11 +68,84 @@
     </ul>
 </div>
 
+<!-- skills -->
+<div class="row">
+    <div class="col-md-6">
+        <h3>Languages and Tools</h3>
+        <hr>
+        <ul>
+            <li>C# <span class="small-text">mainly in Unity (primary language)</span></li>
+            <li>Python <span class="small-text">automating small tools/scripts</span></li>
+            <li>JavaScript <span class="small-text">API calls & frontend scripting</span></li>
+            <li>HTML5 & CSS <span class="small-text">frontend structure & styling</span></li>
+            <li>Jinja2 <span class="small-text">modular HTML templates</span></li>
+            <li>Flask <span class="small-text">backend development</span></li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h3>Technical Skills</h3>
+        <hr>
+        <ul>
+            <li>Procedural animation & generation</li>
+            <li>Custom Unity editor tools</li>
+            <li>Gameplay systems</li>
+            <li>Inverse kinematics implementation (2D & 3D)</li>
+            <li>Backend routing & templating</li>
+            <li>Git & version control</li>
+        </ul>
+    </div>
+</div>
+
 <!-- education -->
 <h2>Education</h2>
 <hr>
 <strong>Purdue University</strong>
 <p class="small-text">Bachelor of Science in Game Development and Design &ndash; Expected 2029</p>
-<!-- "reach out" form -->
+{% endblock %}
+
+{% block post_content %}
+<div class="reach-out-container">
+    <div class="reach-out-card">
+        <h2>Get In Touch</h2>
+        <p class="small-text">
+            If you'd like to discuss a project, collaboration, or anything related to my work, feel free to reach out.
+        </p>
+
+        <form action="/reach-out" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required placeholder="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Reason</label>
+                <select id="reason" name="reason" required>
+                    <option value="" disabled selected>Select one</option>
+                    <option value="project">Project Inquiry</option>
+                    <option value="collab">Collaboration</option>
+                    <option value="work">Work Opportunity</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="company">Company <span class="small-text">(optional)</span></label>
+                <input id="company" name="company" type="text" placeholder="Your Company Name">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" required placeholder="Message..."></textarea>
+            </div>
+
+            <button type="submit" class="reach-out-btn">Send</button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
