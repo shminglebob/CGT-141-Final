@@ -1,4 +1,6 @@
-const toggler = document.querySelector('.navbar-toggler');
+const toggler = document.querySelector('.navbar-toggler'),
+    rootElement = document.documentElement;
+
 if (toggler) {
 
     toggler.offsetHeight;

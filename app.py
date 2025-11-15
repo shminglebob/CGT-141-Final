@@ -47,9 +47,11 @@ def devlog(slug):
     curr_devlog = projects_json[slug]
 
     md_filename = curr_devlog['md-path']
+    title, parsed_md = parse_md_file(f'static/md/{md_filename}')
+
 
     return render_template('skeletons/devlog-base.html', theme=theme, 
-                           markdown_content=parse_md_file(f'static/md/{md_filename}'))
+                           markdown_content=parsed_md, devlog_title=title)
 
 @app.route('/contact')
 def contact():
@@ -76,12 +78,13 @@ def render_page(path, page_name, request, **kwargs):
     return render_template(path, **context)
 
 def parse_md_file(path):
-    markdown_content = f'<h1 class="md-title">{path.split("/")[-1][:-3]}</h1>'
+    title = path.split("/")[-1][:-3]
+    markdown_content = ''
     with open(path, 'r') as f:
         markdown_content += markdown.markdown(f.read(), extensions=['fenced_code', 'toc'])
         f.close()
 
-    return markdown_content
+    return title, markdown_content
 
 if __name__ == '__main__':
     with app.app_context():

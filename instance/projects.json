@@ -2,7 +2,7 @@
     "inverse-kinematics": {
         "title": "inverse kinematics in 2d and 3d",
         "description": "inverse kinematics demonstrated in unity.",
-        "md-path": "Three Link Inverse Kinematics.md",
+        "md-path": "Inverse Kinematics Study.md",
         "tags": [
             "unity",
             "c#",

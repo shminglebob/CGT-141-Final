@@ -5,7 +5,7 @@
     z-index: 1000;
 }
 
-.nav-btn {
+.nav-button {
     width: 5dvh;
     height: 5dvh;
     border: none;
@@ -15,16 +15,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15%;
+    gap: .5dvh;
     cursor: pointer;
     transition: background 0.3s ease;
     position: fixed;
     top: 1.5rem;
     right: 1.5rem;
     z-index: 1100;
+    outline: none;
 }
 
-.nav-btn span {
+.nav-button span {
     width: 60%;
     height: 2px;
     border-radius: .15dvh;
@@ -34,12 +35,12 @@
 }
 
 /* turn the icon into an X when active */
-.nav-btn.active span:nth-child(1) {
-    transform: translateY(.5dvh) rotate(45deg);
+.nav-button.active span:nth-child(1) {
+    transform: translateY(calc(.25dvh + 1px)) rotate(45deg);
 }
 
-.nav-btn.active span:nth-child(2) {
-    transform: translateY(-.5dvh) rotate(-45deg);
+.nav-button.active span:nth-child(2) {
+    transform: translateY(calc(-.25dvh - 1px)) rotate(-45deg);
 }
 
 .nav-links {
@@ -87,6 +88,7 @@
     font-size: 1.6rem;
     cursor: pointer;
     z-index: 1000;
+    outline: none;
 
     background-color: var(--bg-colour);
 }

@@ -1,8 +1,5 @@
-:has(>.container) {
-    margin: auto;
-}
-
 .content-container {
+    margin: auto;
     border-radius: 2.5rem !important;
 }
 
@@ -13,8 +10,8 @@ form {
     background: var(--secondary-colour);
     border-radius: 2rem;
     outline: 2rem solid var(--primary-accent-colour);
-    margin-top: 4rem;
-    margin-bottom: 4rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
     text-align: center;
 }
 
@@ -40,28 +37,20 @@ form input::placeholder {
     opacity: 75%;
 }
 
-form input:focus {
-    border-color: #4f86ff;
-    box-shadow: 0 0 0 3px rgba(79, 134, 255, .25);
-}
-
 form button {
     margin-top: 1rem;
     padding: 0.6rem 1.2rem;
-    border: none;
     border-radius: 8px;
-    background: #4f86ff;
-    color: #fff;
+    outline: none;
     font-size: 1rem;
-    font-weight: 600;
+    background-color: var(--primary-colour);
+    color: var(--secondary-colour);
     cursor: pointer;
     transition: filter .15s ease, transform .1s ease;
 }
 
-form button:hover {
-    filter: brightness(1.1);
-}
-
-form button:active {
-    transform: translateY(1px);
+@media (min-aspect-ratio: 1) {
+    form {
+        margin-top: 2rem;
+    }
 }

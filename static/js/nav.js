@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     //  Renew cookie for a year (idk if this is too long)
-    document.cookie = `theme=${root.dataset.theme};path=/;max-age=31536000`;
+    document.cookie = `theme=${rootElement.dataset.theme};path=/;max-age=31536000`;
 });
 
 const navToggle = document.getElementById("nav-toggle"),
@@ -12,9 +12,7 @@ navToggle.addEventListener("click", () => {
 });
 
 const themeToggle = document.getElementById('theme-toggle'),
-    overlay = document.getElementById('theme-overlay'),
-    root = document.documentElement;
-
+    overlay = document.getElementById('theme-overlay');
 let swappingTheme = false;
 
 themeToggle.addEventListener("click", () => {
@@ -38,7 +36,7 @@ themeToggle.addEventListener("click", () => {
         }
     ).onfinish = () => {
         overlay.style.clipPath = 'circle(200% at 100% 0%)';
-        root.dataset.theme = root.dataset.theme != 'dark' ? 'dark' : 'light';
+        rootElement.dataset.theme = rootElement.dataset.theme != 'dark' ? 'dark' : 'light';
         overlay.animate(
             [
                 { opacity: 1 },
@@ -54,7 +52,7 @@ themeToggle.addEventListener("click", () => {
             overlay.style.backgroundColor = '';
             swappingTheme = false;
 
-            document.cookie = `theme=${root.dataset.theme};path=/;max-age=31536000`; // Update cookie
+            document.cookie = `theme=${rootElement.dataset.theme};path=/;max-age=31536000`; // Update cookie
         };
     };
 });

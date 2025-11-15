@@ -1,7 +1,7 @@
 {% extends 'skeletons/base.html' %}
 
 {% block head %}
-<title>Devlog</title>
+<title>paidvbux | {{ devlog_title }}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/devlog.css') }}">
 {% endblock %}
 
@@ -11,6 +11,7 @@
 
 {% block content %}
 <div>
+    <h1 class="md-title">{{ devlog_title }}</h1>
     <div class="markdown-wrapper">
         {{ markdown_content | safe }}
     </div>

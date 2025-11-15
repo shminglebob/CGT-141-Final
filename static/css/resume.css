@@ -5,6 +5,11 @@
     }
 }
 
+.content-container {
+    display: flex;
+    flex-direction: column;
+}
+
 strong {
     font-family: var(--base-font);
     font-weight: bold;
@@ -24,8 +29,6 @@ span.small-text {
 }
 
 .reach-out-container {
-    margin-top: 3rem;
-    margin-bottom: 4rem;
     display: flex;
     justify-content: center;
 }
@@ -37,6 +40,7 @@ span.small-text {
     outline: 1.5rem solid var(--primary-accent-colour);
     border-radius: 2.5rem;
     background: var(--secondary-colour);
+    position: relative;
 }
 
 .reach-out-card h2 {
@@ -68,12 +72,72 @@ span.small-text {
     opacity: 75%;
 }
 
-.reach-out-btn {
-    width: 100%;
-    padding: 0.7rem;
+.submit-button {
+    position: relative;
+    float: right;
     border: none;
-    border-radius: .25rem;
-    background: var(--secondary-accent-colour);
+    border-radius: 2dvh;
+    background-color: var(--secondary-accent-colour);
     outline: .25rem solid var(--primary-accent-colour);
-    font-weight: 600;
+    height: 4dvh;
+    width: 4dvh;
+    transform-origin: center;
+}
+
+.submit-button p {
+    position: relative;
+    bottom: 1dvh;
+    transform-origin: center;
+    color: var(--primary-accent-colour);
+    font-size: 3dvh;
+}
+
+button.submit-button:focus {
+    outline: .5rem solid var(--secondary-accent-colour);
+}
+
+[data-theme="dark"] .submit-button p {
+    color: var(--text-colour);
+}
+
+.close-button {
+    position: absolute;
+    top: -1.25rem;
+    right: -1.25rem;
+    background-color: var(--error-colour);
+    border: none;
+    width: 3rem;
+    height: 3rem;
+    outline: .25rem solid var(--dark-error-colour);
+    border-radius: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    justify-items: center;
+}
+
+button.close-button:focus {
+    outline: .25rem solid var(--error-colour);
+}
+
+.close-button span {
+    display: block;
+    width: 120%;
+    height: .2rem;
+    border-radius: .1rem;
+    background: var(--bg-colour);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+.reach-out-button {
+    width: 25%;
+    margin: auto;
+}
+
+[data-theme="dark"] .close-button span {
+    background: var(--text-colour);
+}
+
+button.reach-out-button:focus {
+    outline: .25rem solid var(--primary-colour);
 }
