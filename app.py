@@ -111,7 +111,8 @@ def shiki_highlight_block(code, lang, theme):
         ["node", SHIKI_SCRIPT],
         input=payload,
         text=True,
-        capture_output=True
+        capture_output=True,
+        timeout=2
     )
 
     if result.returncode != 0:
