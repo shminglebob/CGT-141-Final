@@ -85,21 +85,11 @@ github_alert_replacements = {
 
 def replace_github_alerts(text):
     lines = text.splitlines()
-
-    in_alert = False
-    for i in range(len(lines)):
-        l = lines[i].strip()
-        if l[:4] == '> [!' and l[-1] == ']':
-            lines[i] = github_alert_replacements[l]
-            in_alert = True
-            continue
-        if in_alert and len(l) > 0: 
-            if l[0] == '>':
-                lines[i] = '\t' + l[1:]
-            else:
-                in_alert = False
-
-    return '\n'.join(lines)
+    for i, l in enumerate(lines):
+        stripped = l.strip()
+        if stripped in github_alert_replacements:
+            lines[i] = github_alert_replacements[stripped]
+    return "\n".join(lines)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SHIKI_SCRIPT = os.path.join(BASE_DIR, "shiki_highlight.js")
