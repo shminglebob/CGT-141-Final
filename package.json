@@ -1,0 +1,24 @@
+{
+  "name": "cgt-141-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shminglebob/CGT-141-Final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shminglebob/CGT-141-Final/issues"
+  },
+  "homepage": "https://github.com/shminglebob/CGT-141-Final#readme",
+  "dependencies": {
+    "shiki": "^3.15.0"
+  }
+}

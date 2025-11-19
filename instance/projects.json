@@ -10,9 +10,9 @@
         ]
     },
     "spider": {
-        "title": "procedural spider",
+        "title": "procedurally animated spider",
         "description": "a procedurally animated spider built in unity.",
-        "md-path": "Procedural Spider.md",
+        "md-path": "Procedural Animation Study.md",
         "tags": [
             "unity",
             "c#",

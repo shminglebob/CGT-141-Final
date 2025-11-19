@@ -9,6 +9,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Maple Mono';
+    src: url('/static/fonts/MapleMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Declare global variables */
 :root {
     /* Colours */
@@ -36,6 +43,7 @@
     /* Fonts */
     --title-font: 'Indie Flower';
     --base-font: 'Reef';
+    --code-font: 'Maple Mono';
 }
 
 :root[data-theme="dark"] {

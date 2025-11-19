@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, current_app
 from flask_sqlalchemy import SQLAlchemy
-import markdown
-import json
-import os
+import subprocess, markdown, json, re, os
 
 app = Flask(__name__)
 
@@ -41,6 +39,7 @@ def devlog_root():
 @app.route('/devlog/<slug>')
 def devlog(slug):
     theme = request.cookies.get('theme', 'light')
+
     if slug not in projects_json.keys():
         return render_template('error pages/page-not-found.html', theme=theme)
 
@@ -77,13 +76,91 @@ def render_page(path, page_name, request, **kwargs):
     
     return render_template(path, **context)
 
+github_alert_replacements = {
+    '> [!important]' : '!!! important',
+    '> [!warning]' : '!!! warning',
+    '> [!note]' : '!!! note',
+    '> [!tip]' : '!!! tip',
+}
+
+def replace_github_alerts(text):
+    lines = text.splitlines()
+
+    in_alert = False
+    for i in range(len(lines)):
+        l = lines[i].strip()
+        if l[:4] == '> [!' and l[-1] == ']':
+            lines[i] = github_alert_replacements[l]
+            in_alert = True
+            continue
+        if in_alert and len(l) > 0: 
+            if l[0] == '>':
+                lines[i] = '\t' + l[1:]
+            else:
+                in_alert = False
+
+    return '\n'.join(lines)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SHIKI_SCRIPT = os.path.join(BASE_DIR, "shiki_highlight.js")
+
+SHIKI_CACHE = {}
+
+def shiki_highlight_block(code, lang, theme):
+    key = (code, lang, theme)
+    if key in SHIKI_CACHE:
+        return SHIKI_CACHE[key]
+
+    payload = json.dumps({
+        "code": code,
+        "lang": lang,
+        "theme": theme
+    })
+
+    result = subprocess.run(
+        ["node", SHIKI_SCRIPT],
+        input=payload,
+        text=True,
+        capture_output=True
+    )
+
+    if result.returncode != 0:
+        escaped = (
+            code.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+        )
+        return f"<pre><code>{escaped}</code></pre>"
+
+    SHIKI_CACHE[key] = result.stdout
+    return result.stdout
+
+FENCE_RE = re.compile(r"```(\w+)?\n(.*?)```", re.DOTALL)
+
+def render_shiki(md_text, theme):
+    def _repl(match):
+        lang = match.group(1) or "text"
+        code = match.group(2).rstrip("\n")
+        return shiki_highlight_block(code, lang, theme)
+
+    return FENCE_RE.sub(_repl, md_text)
+
 def parse_md_file(path):
     title = path.split("/")[-1][:-3]
-    markdown_content = ''
+    
+    text = ''
     with open(path, 'r') as f:
-        markdown_content += markdown.markdown(f.read(), extensions=['fenced_code', 'toc'])
-        f.close()
+        text = f.read()
 
+    text = replace_github_alerts(text)
+    text = render_shiki(text, 'gruvbox-dark-soft')
+
+    md = markdown.Markdown(extensions=[
+            'admonition',
+            'toc',
+            'extra'])
+    
+    markdown_content = md.convert(text) 
     return title, markdown_content
 
 if __name__ == '__main__':
