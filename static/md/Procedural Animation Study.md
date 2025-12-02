@@ -24,11 +24,7 @@ Spider (what is moved and everything follows it)
         -> IK Target 1..n
 ```
 
-Essentially, this parenting structure moves the pivots and ground targets to follow the body's orientation and its position. I separated the body from the main spider transform so I could keep its transform preserved locally in case it is needed for systems like pathfinding. This is a preference thing though so if your goal isn't to use it as a mob in a game, then you can probably structure it as so:
-
-> [!note] 
->
-> `Pivots` and `Ground Targets` are not actually required in both cases as they are just there for organization. The `Legs` parent, however, is required and needs to be at the origin with no orientation or else it can mess with the inverse kinematics in each leg.
+Essentially, this parenting structure moves the pivots and ground targets to follow the body's orientation and its position. I separated the body from the main spider transform so I could keep its transform preserved locally in case it is needed for systems like pathfinding. This is a preference thing though so if your goal isn't to use it as a mob in a game, you can probably structure it as so:
 
 ```text
 Body
@@ -40,6 +36,8 @@ Body
     ->   Leg 1..n
         ->   IK Target 1..n
 ```
+
+`Pivots` and `Ground Targets` are not actually required in both cases as they are just there for organization. The `Legs` parent, however, is required and needs to be at the origin with no orientation or else it can mess with the inverse kinematics in each leg.
 
 ## Logic Flow
 
@@ -60,10 +58,6 @@ Since that was only the leg logic, we do need to talk about the role that it pla
 There are still other things we need to calculate like the body's height and orientation which are both based off the leg positions. The body's transform should be calculated before the legs but after the legs are initialized.
 
 Using this we can form a basic update loop like so:
-
-> [!important]
->
-> The leg parent's position and rotation must be zeroed or else it will cause errors when rotating the spider.
 
 ```csharp
 void Update() {
@@ -91,10 +85,6 @@ UpdateLegGroup(rightLegs, 1);
 
 Let's now define `UpdateLegGroup()` to actually incorporate this: 
 
-> [!warning]
->
-> Don't use `foreach` here as we need `i` for calculating the alternating legs. 
-
 ```csharp
 void UpdateLegGroup(Legs[] legGroup, int offset) {
     for (int i = 0; i < legGroup.Length; i++) {	
@@ -112,7 +102,7 @@ void UpdateLegGroup(Legs[] legGroup, int offset) {
 }
 ```
 
-To explain the boolean that I used in the if statement, what we want to check: 
+I used a normal `for` loop here as we need `i` for alternating legs and to explain the if statement, here's what we want to check: 
 
 - `Vector3.Distance(...) > maxLegDelta` - that the distance is large enough to move the IK target to the ground target
 - `(i % 2 == offset) == groupOneMoving` 
@@ -126,41 +116,63 @@ If we were doing this completely from scratch this section would be quite a bit 
 
 ### Body Height Calculation
 
+
+
 ### Body Tilt Calculation
 
 
 
+# Full Script Explanation
 
+For the sake of simplicity (and not writing documentation for my second order dynamics system), I will use the spider controller that uses linear interpolation instead.
 
+## Variables
 
+### The Leg Class
 
+This class has quite a bit of variables and this is stored per leg:
 
+```csharp
+public Transform pivot;
+public Transform groundTarget;
+public ThreeLinkV2 leg;
 
+public bool initialized = false;
 
+public Vector3 startPosition, targetPosition;
+public Vector3 startUp, targetUp;
 
+public float restTimer;
+public float startInterpolationTime;
+public bool isStepping = false;
 
+public Vector3 rawUp;
+public Quaternion skewRotation;
+```
 
+#### References
 
+- `pivot` - the "shoulder" position on the body. Essentially the position the leg should be fixed to.
+- `groundTarget` - the desired landing point on the ground.
+- `leg` - reference to the IK solver. Only the third link length and IK target are accessed through this script.
 
+If `pivot` and `groundTarget` were on a 2D plane, `pivot = (0, 1)` and `groundTarget = (2, 3)`, then intuitively the distance between where the leg's end effector and the `pivot` would aim to be $2\sqrt2$ units apart.
 
+#### Stepping Interpolation
 
+- `initialized` - whether the leg has touched the ground at least once and has valid starting values.
+- `startPosition`, `targetPosition` - the start and end positions for the step interpolation.
+- `startUp`, `targetUp` - the start and end up vectors for rotation in the interpolation. 
+- `restTimer` - how long the leg has been idle before forcing a step to correct its "posture". Essentially ensures that the spider isn't in some half-way step.
+- `startInterpolationTime` - used in interpolation since it lerps over a certain interval. 
+- `isStepping` - whether the leg is currently interpolating. Needed otherwise it will stay frozen at `startPosition` forever.
 
+`startUp` and `targetUp` could be replaced with `Quaternion startRot, targetRot` while using `Quaternion.Slerp`. The up vectors only exists since this was adapted from a system that only accepts vectors.
 
+#### Leaning/Velocity-based Rotation
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- `rawUp` - the unmodified up vector used as the base for leaning.
+- `skewRotation` - the velocity-based rotation applied on `rawUp`.
 
 
 

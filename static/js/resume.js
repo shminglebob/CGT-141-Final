@@ -10,6 +10,31 @@ function togglePopup() {
     popupOpen = !popupOpen;
 }
 
-function sendReachOutTicket(event) {
+const nameInput = document.getElementById('name'),
+    emailInput = document.getElementById('email'),
+    reasonInput = document.getElementById('reason'),
+    companyInput = document.getElementById('company'),
+    messageInput = document.getElementById('message');
 
+function sendReachOutTicket(event) {
+    event.preventDefault();
+    
+    $.ajax({
+        type: 'POST',
+        url: '/contact-form',
+        data: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+            reason: reasonInput.value,
+            company: companyInput.value,
+            message: messageInput.value
+        }),
+        'contentType': 'application/json',
+        success: function (response) {
+            if (response == 'success') {
+                alert('email sent successfully!');
+                togglePopup();
+            }
+        },
+    });
 }

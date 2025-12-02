@@ -112,3 +112,15 @@ pre {
 code {
     font-family: var(--code-font);
 }
+
+h1 {
+    border-bottom: solid .5dvh var(--primary-colour);
+}
+
+h2{
+    border-bottom: dashed .25dvh var(--primary-colour);
+} 
+
+h3, h4 {
+    border-bottom: dotted max(.125dvh, 2px) var(--primary-colour);
+}
