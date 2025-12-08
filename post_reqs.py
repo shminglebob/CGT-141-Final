@@ -20,6 +20,11 @@ def subscribe():
     try:
         db.session.add(email_entry)
         db.session.commit()
+
+        msg = Message('Subscribed to paidvbux\'s Newsletter!', recipients=[email])
+        msg.body = 'Thank you for subscribing to my newsletter! You will receive updates whenever I post a new devlog!'
+
+        mail.send(msg)
     except IntegrityError:
         db.session.rollback()
         return {'result':'error', 'error':'user exists'}, 409
