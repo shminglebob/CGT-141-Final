@@ -10,7 +10,11 @@ def about():
 
 @app.route('/projects')
 def projects():
+    print(f'before: {projects_json}')
+    
     ensure_projects_loaded()
+
+    print(f'after: {projects_json}')
     return render_page('projects.html', 'projects', request, projects_json=projects_json)
 
 @app.route('/devlog')
