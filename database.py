@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'poteto chip'
 db = SQLAlchemy(app)
 
 class UserEmail(db.Model):
-    __tablename__ = 'User Emails'
+    __tablename__ = 'user_emails'
 
     email = db.Column(db.String, primary_key=True)
 
