@@ -162,11 +162,6 @@ def about():
 
 @app.route('/projects')
 def projects():
-    import helper_funcs
-
-    print(f'helper {helper_funcs.projects_json}')
-    print(f'non-helper {projects_json}')
-
     ensure_projects_loaded()
 
     return render_page('projects.html', 'projects', request, projects_json=projects_json)
