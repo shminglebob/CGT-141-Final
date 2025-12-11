@@ -84,7 +84,7 @@ span.small-text {
     transform-origin: center;
 }
 
-.submit-button p {
+.submit-button span {
     position: relative;
     bottom: 1dvh;
     transform-origin: center;
@@ -96,7 +96,7 @@ button.submit-button:focus {
     outline: .5rem solid var(--secondary-accent-colour);
 }
 
-[data-theme="dark"] .submit-button p {
+[data-theme="dark"] .submit-button span {
     color: var(--text-colour);
 }
 
