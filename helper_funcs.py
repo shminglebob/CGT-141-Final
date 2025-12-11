@@ -76,12 +76,11 @@ prerendered_md = {}
 
 projects_json = None
 
+
 def init_md():
-    # read from json
-    with app.app_context():
-        local_path = os.path.join(current_app.instance_path, 'projects.json')
-        with open(local_path, 'r') as f:
-            projects_json = json.loads(f.read())
+    local_path = os.path.join(current_app.instance_path, 'projects.json')
+    with open(local_path, 'r') as f:
+        projects_json = json.loads(f.read())
 
     for slug in projects_json.keys():
         md_filename = projects_json[slug]['md-path']
