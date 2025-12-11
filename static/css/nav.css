@@ -93,7 +93,8 @@
     background-color: var(--bg-colour);
 }
 
-#theme-toggle>div {
+#theme-toggle>span {
+    display: block;
     inset: 0;
     width: 5dvh;
     height: 5dvh;
@@ -103,7 +104,7 @@
     transition: background 0.3s ease;
 }
 
-#theme-toggle div:hover {
+#theme-toggle span:hover {
     background-color: var(--alt-bg-colour);
 }
 
