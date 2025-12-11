@@ -90,12 +90,17 @@ prerendered_md = {}        # in-memory cache: slug -> (title, html)
 def ensure_projects_loaded():
     """load instance/projects.json once per worker, when first needed."""
     global projects_json
+
+    print('checking if projects have been loaded')
+
     if projects_json is not None:
+        print('already loaded returning...')
         return
 
     local_path = os.path.join(current_app.instance_path, "projects.json")
     with open(local_path, "r", encoding="utf-8") as f:
         projects_json = json.load(f)
+    print('successfully loaded')
 
 def _get_cache_path(slug: str) -> str:
     """
