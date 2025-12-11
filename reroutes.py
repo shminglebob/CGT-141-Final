@@ -1,5 +1,17 @@
 from helper_funcs import *
 
+if projects_json == None:
+    projects_json = {'test': {
+        "title": "inverse kinematics in 2d and 3d",
+        "description": "inverse kinematics demonstrated in unity.",
+        "md-path": "Inverse Kinematics Study.md",
+        "tags": [
+            "unity",
+            "c#",
+            "math"
+        ]
+    }}
+
 @app.route('/')
 def index():
     return render_page('index.html', 'home', request)
