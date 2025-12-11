@@ -76,18 +76,19 @@ prerendered_md = {}
 
 projects_json = None
 
-# read from json
-with app.app_context():
-    local_path = os.path.join(current_app.instance_path, 'projects.json')
-    with open(local_path, 'r') as f:
-        projects_json = json.loads(f.read())
+def init_md():
+    # read from json
+    with app.app_context():
+        local_path = os.path.join(current_app.instance_path, 'projects.json')
+        with open(local_path, 'r') as f:
+            projects_json = json.loads(f.read())
 
-for slug in projects_json.keys():
-    md_filename = projects_json[slug]['md-path']
-    title, parsed_md = parse_md_file(f'static/md/{md_filename}')
+    for slug in projects_json.keys():
+        md_filename = projects_json[slug]['md-path']
+        title, parsed_md = parse_md_file(f'static/md/{md_filename}')
 
-    prerendered_md.update({ slug: (title, parsed_md) })
-
+        prerendered_md.update({ slug: (title, parsed_md) })
+    
 def fetch_md(slug):
     title, md = prerendered_md[slug] 
     return title, md
