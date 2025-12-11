@@ -1,13 +1,5 @@
 from helper_funcs import *
 
-projects_json = None
-
-# read from json
-with app.app_context():
-    local_path = os.path.join(current_app.instance_path, 'projects.json')
-    with open(local_path, 'r') as f:
-        projects_json = json.loads(f.read())
-
 @app.route('/')
 def index():
     return render_page('index.html', 'home', request)
@@ -32,11 +24,7 @@ def devlog(slug):
     if slug not in projects_json.keys():
         return render_template('error pages/page-not-found.html', theme=theme)
 
-    curr_devlog = projects_json[slug]
-
-    md_filename = curr_devlog['md-path']
-    title, parsed_md = parse_md_file(f'static/md/{md_filename}')
-
+    title, parsed_md = fetch_md(slug)
 
     return render_template('skeletons/devlog-base.html', theme=theme, 
                            markdown_content=parsed_md, devlog_title=title)

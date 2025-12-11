@@ -18,17 +18,12 @@ def replace_github_alerts(text):
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SHIKI_SCRIPT = os.path.join(BASE_DIR, "shiki_highlight.js")
 
-SHIKI_CACHE = {}
 
-def shiki_highlight_block(code, lang, theme):
-    key = (code, lang, theme)
-    if key in SHIKI_CACHE:
-        return SHIKI_CACHE[key]
-
+def shiki_highlight_block(code, lang):
     payload = json.dumps({
         "code": code,
         "lang": lang,
-        "theme": theme
+        "theme": 'gruvbox-dark-soft'
     })
 
     result = subprocess.run(
@@ -47,16 +42,15 @@ def shiki_highlight_block(code, lang, theme):
         )
         return f"<pre><code>{escaped}</code></pre>"
 
-    SHIKI_CACHE[key] = result.stdout
     return result.stdout
 
 FENCE_RE = re.compile(r"```(\w+)?\n(.*?)```", re.DOTALL)
 
-def render_shiki(md_text, theme):
+def render_shiki(md_text):
     def _repl(match):
         lang = match.group(1) or "text"
         code = match.group(2).rstrip("\n")
-        return shiki_highlight_block(code, lang, theme)
+        return shiki_highlight_block(code, lang)
 
     return FENCE_RE.sub(_repl, md_text)
 
@@ -68,7 +62,7 @@ def parse_md_file(path):
         text = f.read()
 
     text = replace_github_alerts(text)
-    text = render_shiki(text, 'gruvbox-dark-soft')
+    text = render_shiki(text)
 
     md = markdown.Markdown(extensions=[
             'admonition',
@@ -77,3 +71,23 @@ def parse_md_file(path):
     
     markdown_content = md.convert(text) 
     return title, markdown_content
+
+prerendered_md = {}
+
+projects_json = None
+
+# read from json
+with app.app_context():
+    local_path = os.path.join(current_app.instance_path, 'projects.json')
+    with open(local_path, 'r') as f:
+        projects_json = json.loads(f.read())
+
+for slug in projects_json.keys():
+    md_filename = projects_json[slug]['md-path']
+    title, parsed_md = parse_md_file(f'static/md/{md_filename}')
+
+    prerendered_md.update({ slug: (title, parsed_md) })
+
+def fetch_md(slug):
+    title, md = prerendered_md[slug] 
+    return title, md
