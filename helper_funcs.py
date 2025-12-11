@@ -1,4 +1,6 @@
 from database import *
+import os, json, subprocess, markdown, re
+from flask import current_app
 
 github_alert_replacements = {
     '> [!important]' : '!!! important',
@@ -17,7 +19,6 @@ def replace_github_alerts(text):
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SHIKI_SCRIPT = os.path.join(BASE_DIR, "shiki_highlight.js")
-
 
 def shiki_highlight_block(code, lang):
     payload = json.dumps({
@@ -56,8 +57,7 @@ def render_shiki(md_text):
 
 def parse_md_file(path):
     title = path.split("/")[-1][:-3]
-    
-    text = ''
+
     with open(path, 'r') as f:
         text = f.read()
 
@@ -65,30 +65,44 @@ def parse_md_file(path):
     text = render_shiki(text)
 
     md = markdown.Markdown(extensions=[
-            'admonition',
-            'toc',
-            'extra'])
+        'admonition',
+        'toc',
+        'extra'])
     
     markdown_content = md.convert(text) 
     return title, markdown_content
 
-prerendered_md = {}
+# ---- lazy-loaded globals ----
 
 projects_json = None
+prerendered_md = {}
 
-def init_md():
-    global prerendered_md, projects_json
+def ensure_projects_loaded():
+    """load projects.json once, when first needed"""
+    global projects_json
+    if projects_json is not None:
+        return
 
     local_path = os.path.join(current_app.instance_path, 'projects.json')
     with open(local_path, 'r') as f:
         projects_json = json.loads(f.read())
 
-    for slug in projects_json.keys():
-        md_filename = projects_json[slug]['md-path']
-        title, parsed_md = parse_md_file(f'static/md/{md_filename}')
+def ensure_md_loaded(slug):
+    """ensure one devlog's markdown is parsed + cached"""
+    global prerendered_md
+    ensure_projects_loaded()
 
-        prerendered_md.update({ slug: (title, parsed_md) })
-    
+    if slug in prerendered_md:
+        return
+
+    if slug not in projects_json:
+        raise KeyError(f"unknown devlog slug: {slug}")
+
+    md_filename = projects_json[slug]['md-path']
+    md_path = os.path.join(current_app.root_path, 'static', 'md', md_filename)
+    title, parsed_md = parse_md_file(md_path)
+    prerendered_md[slug] = (title, parsed_md)
+
 def fetch_md(slug):
-    title, md = prerendered_md[slug] 
-    return title, md
+    ensure_md_loaded(slug)
+    return prerendered_md[slug]

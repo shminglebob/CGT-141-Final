@@ -10,6 +10,7 @@ def about():
 
 @app.route('/projects')
 def projects():
+    ensure_projects_loaded()
     return render_page('projects.html', 'projects', request, projects_json=projects_json)
 
 @app.route('/devlog')
@@ -19,6 +20,7 @@ def devlog_root():
 
 @app.route('/devlog/<slug>')
 def devlog(slug):
+    ensure_projects_loaded()
     theme = request.cookies.get('theme', 'light')
 
     if slug not in projects_json.keys():
