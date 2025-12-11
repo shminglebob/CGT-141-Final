@@ -1,4 +1,5 @@
 from helper_funcs import *
+from helper_funcs import projects_json
 
 @app.route('/')
 def index():
@@ -10,7 +11,6 @@ def about():
 
 @app.route('/projects')
 def projects():
-    global projects_json    
     ensure_projects_loaded()
 
     return render_page('projects.html', 'projects', request, projects_json=projects_json)
@@ -22,7 +22,6 @@ def devlog_root():
 
 @app.route('/devlog/<slug>')
 def devlog(slug):
-    global projects_json
     ensure_projects_loaded()
     theme = request.cookies.get('theme', 'light')
 
