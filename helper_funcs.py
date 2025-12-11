@@ -77,7 +77,8 @@ prerendered_md = {}
 projects_json = None
 
 def init_md():
-    global projects_json
+    global prerendered_md, projects_json
+
     local_path = os.path.join(current_app.instance_path, 'projects.json')
     with open(local_path, 'r') as f:
         projects_json = json.loads(f.read())
