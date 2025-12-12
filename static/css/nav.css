@@ -34,7 +34,6 @@
     transform-origin: center;
 }
 
-/* turn the icon into an X when active */
 .nav-button.active span:nth-child(1) {
     transform: translateY(calc(.25dvh + 1px)) rotate(45deg);
 }
