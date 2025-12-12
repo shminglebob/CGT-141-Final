@@ -3,8 +3,10 @@ from reroutes import *
 from flask_mail import Mail, Message
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_TIMEOUT'] = 10
 app.config['MAIL_USERNAME'] = 'jiangjeric@gmail.com'   
 app.config['MAIL_PASSWORD'] = 'bozg eekk vles rwhu'
 app.config['MAIL_DEFAULT_SENDER'] = 'jiangjeric@gmail.com'
@@ -19,7 +21,6 @@ def subscribe():
 
     try:
         db.session.add(email_entry)
-        db.session.commit()
 
         msg = Message('Subscribed to paidvbux\'s Newsletter!', recipients=[email])
         msg.body = 'Thank you for subscribing to my newsletter! You will receive updates whenever I post a new devlog!'
@@ -28,9 +29,12 @@ def subscribe():
     except IntegrityError:
         db.session.rollback()
         return {'result':'error', 'error':'user exists'}, 409
-    except Exception:
+    except Exception as e:
+        print(e)
         db.session.rollback()
         return {'result':'error', 'error':'unknown exists'}, 500
+    
+    db.session.commit()
 
     return {'result':'success'}, 201
 

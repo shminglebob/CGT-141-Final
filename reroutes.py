@@ -88,8 +88,6 @@ def ensure_projects_loaded():
     if projects_json is not None:
         return
 
-    print('wow printed something!!!')
-
     local_path = os.path.join(app.instance_path, "projects.json")
     with open(local_path, "r", encoding="utf-8") as f:
         projects_json = json.load(f)
