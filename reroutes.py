@@ -143,10 +143,6 @@ def ensure_md_loaded(slug: str):
     prerendered_md[slug] = (title, parsed_md)
 
 def fetch_md(slug: str):
-    """
-    public api for routes:
-       title, html = fetch_md(slug)
-    """
     ensure_md_loaded(slug)
     return prerendered_md[slug]
 
@@ -194,6 +190,36 @@ def gallery():
 def resume():
     return render_page('resume.html', 'resume', request)
 
+rendered_about = {}
+paths = {'about me' : 'master docs/about me.md',
+         'my goals' : 'master docs/my goals.md',
+         'what i like' : 'master docs/what i like.md',
+         'afterword' : 'afterword.md',
+         'q&a conditions' : 'q&a conditions.md',
+         'q&a' : 'q&a.md'}
+
+def load_about_me():
+    global rendered_about
+
+    #   load all the info only once
+    for key, path in paths.items():
+        if key in rendered_about:
+            continue
+        full_path = os.path.join(app.root_path, "static", "md", f'./personal about/{path}')
+        rendered_about.update({ key : parse_md_file(full_path)[1] })
+
+@app.route('/about/personal')
+def personal_about():
+    load_about_me()
+        
+    return render_page('about-personal.html', '', request, md=rendered_about)
+
+@app.route('/about/personal/letter')
+def about_me_letter():
+    load_about_me()
+    
+    return render_template('letter.html', md=rendered_about)
+    
 def render_page(path, page_name, request, **kwargs):
     theme = request.cookies.get('theme', 'light')
 

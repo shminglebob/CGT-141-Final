@@ -93,13 +93,13 @@ We also introduce some new variables so that we don't end up with infinite solut
 
 Now we need to talk about what we are trying to find. I moved $d$ and $\theta_E$ here since they are calculated fairly differently compared to their 2D counterparts.
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/P_T Diagram.png'); margin-left: 1rem;"></div>
-
 - $\theta_0,\theta_1,\theta_2$ - the calculated angles for joints 1, 2 and 3 respectively
 - $\theta_E$ - the angle on the projected plane from $O$ to $P_T$ (defined later)
 - $d$ - the distance from $O$ to $P_T$ (defined later)
 
 ### Solving the System
+
+<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/P_T Diagram.png'); margin-left: 1rem;"></div>
 
 The easiest way to understand and solve this problem is by projecting the entire equation onto a plane and solving as if it was a system in $\mathbb{R}^2$.  Projecting something onto a plane might sound scary but we can just fake it by rotating the entire system to be on the xy-plane then rotating it back after. 
 
@@ -140,9 +140,9 @@ We have two options from here, we can take the easy way out which leads to reall
 
 The easy way is really straightforward but the downside is that if $P_T$ isn't lying in the same plane as $O$ and $E$, then it will look very weird. If you do want to do this way and you don't really care how the system responds to the last joint's orientation, then you can quite literally just set the last joint's up vector to be $E_y$.
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Theta_2 Diagram.png'); margin-left: 1rem;"></div>
-
 ### The Natural Hard Way
+
+<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Theta_2 Diagram.png'); margin-left: 1rem;"></div>
 
 To make it more natural we need to solve for, $\theta_2$. This one is a bit harder than the other $\theta$'s but it's easier to understand once we draw a diagram. To do this we need the up and forward vector of the 3rd joint (given we rotated over the x-axis), namely $J_y, J_z$. Finally, to calculate $\theta_2$ we need to find the $x$ and $y$ values in the 3rd joint's coordinate frame, we will call them $j_y$ and $j_z$:
 

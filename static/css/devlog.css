@@ -7,6 +7,7 @@
     mask-image: var(--src);
     mask-repeat: no-repeat;
     mask-size: contain;
+    margin-top: 8rem;
     width: min(25rem, 50dvw);
     height: min(25rem, 50dvw);
     background-color: var(--primary-colour);

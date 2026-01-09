@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>more about me</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/personal about.css') }}">
+</head>
+<body>
+    <!-- 'about me' : 'master docs/about me.md',
+         'my goals' : 'master docs/my goals.md',
+         'what i like' : 'master docs/what i like.md',
+         'afterword' : 'afterword.md',
+         'q&a conditions' : 'q&a conditions.md',
+         'q&a' : 'q&a.md' -->
+    <!-- format
+    email -> about me + afterword
+    search engine
+        patch notes -> my goals
+        blog -> what i like
+    messaging app -> q&a
+    
+    -->
+
+    <div id="desktop">
+        <img id="desktop-background" src="{{ url_for('static', filename='images/textures/desktop background.png') }}">
+        
+        <div id="desktop-apps">
+            <button onclick="openWindow('mail')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/email icon.png')}});"></button>
+            <button onclick="openWindow('search')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/search icon.png')}});"></button>
+            <button onclick="openWindow('messages')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/message icon.png')}});"></button>
+        </div>
+
+        <div class="window" data-window-key="mail" id="emails-window">
+            <div class="title-bar">
+                <button class="title-close" onclick="closeWindow('mail')">x</button>
+            </div>
+            <div id="sidebar-wrapper">
+                <div id="email-list">
+                    <button id="email-entry" onclick="openEmail()">
+                        <div id="sender-wrapper">
+                            <img class="email-pfp" src="{{ url_for('static', filename='images/icons/email pfp.png') }}"> 
+                            <div id="email-info">
+                                <h1>jeric</h1>
+                                <h2>about me</h2>
+                            </div>
+                            <img id="notif-icon" src="{{ url_for('static', filename='images/icons/notification.png') }}">
+                        </div>
+                    </button>
+                </div>
+                <div id="about-me-email" style="display: none;">
+                    <div id="email-header">
+                        <h1>subject: about me</h1>
+                        <h2>jeric -> reader</h2>
+                    </div>
+                    <div class="window-content" id="email">
+                        {{ md['about me'] | safe }}
+                        {{ md['afterword'] | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="window" data-window-key="search" id="search-engine">
+            <div class="title-bar">
+                <button class="title-close" onclick="closeWindow('search')">x</button>
+            </div>
+            <div id="patch-notes">
+                <h1>my goals</h1>
+                {{ md['my goals'] | safe }}
+            </div>
+            <div id="blog">
+                {{ md['what i like'] | safe }}
+            </div>
+        </div>
+        <div class="window" data-window-key="messages" id="messenger-window">
+            <div class="title-bar">
+                <button class="title-close" onclick="closeWindow('messages')">x</button>
+            </div>
+            {{ md['q&a conditions'] | safe }}
+            {{ md['q&a'] | safe }}
+        </div>
+    </div>
+</body>
+
+<script src="{{ url_for('static', filename='js/personal about.js') }}"></script>
+
+</html>

@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Indie+Flower&display=swap');
+
+@font-face {
+    font-family: 'Reef';
+    src: url('/static/fonts/Reef.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maple Mono';
+    src: url('/static/fonts/MapleMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --letter-background-colour: #F3F5FF;
+    
+    --text-colour: #28231D;
+    --semi-muted-colour: #757272;
+    --muted-colour: #C1C1C7;
+    --highlighted-colour: #E3EBFF;
+}
+
+.spotify-embeds {
+    display: flex;
+    flex-direction: row;
+}
+
+html {
+    background-color: #ffeabc;
+    overflow: hidden;
+}
+
+#desktop-background {
+    position: absolute;
+    right: 0;
+    height: 100dvh;
+    user-select: none;
+    z-index: -1;
+}
+
+#desktop-apps {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5dvh;
+    inset: 0;
+    padding: 5dvh;
+}
+
+.app-button {
+    background-image: var(--button-bg);
+    background-size: contain;
+    border-radius: 30%;
+    width: 15dvh;
+    height: 15dvh;
+    border: none;
+    transition: filter 0.3s ease;
+    border: 1dvh solid white;
+    box-shadow: var(--muted-colour) .5rem .5rem 0 0;
+}
+
+.app-button:hover {
+    filter: brightness(0.85);
+}
+
+#desktop {
+    position: absolute;
+    font-family: 'Reef';
+    inset: 0;
+}
+
+#emails-window {
+    background-color: var(--letter-background-colour);
+}
+
+#email * {
+    font-weight: 200;
+}
+
+#email p {
+    font-size: 1.15rem;
+}
+
+#email h1, #email h2 {
+    color: var(--text-colour);
+}
+
+#email h1 {
+    font-size: 2rem; 
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--muted-colour);
+}
+
+#email h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px dashed var(--muted-colour);
+}
+
+blockquote {
+    line-height: 1rem;
+    padding-left: .5rem;
+    border-left: .25rem solid var(--muted-colour);
+}
+
+blockquote p {
+    color: var(--semi-muted-colour);
+}
+
+.window {
+    position: absolute;
+    width: 60dvw;
+    height: 75dvh;
+    border: 1px solid var(--text-colour);
+    border-radius: 1rem;
+    top: calc(50% - 37.5dvh);
+    left: calc(50% - 30dvw);
+    overflow: hidden;
+    user-select: none;
+}
+
+.title-bar {
+    height: 2rem;
+    border-bottom: 1px solid var(--text-colour);
+    position: relative;
+    width: calc(100%);
+}
+
+.title-close {
+    all: unset;
+    font-family: 'Reef';
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 2rem;
+    width: 3rem;
+    border-left: 1px solid var(--text-colour);
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.title-close:hover {
+    background-color: #f26a8d; 
+}
+
+#sidebar-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#email-list {
+    border-right: 1px solid var(--text-colour);
+    height: calc(75dvh - 2rem);
+}
+
+#email-entry {
+    all: unset;
+    width: 15dvw;
+    border-bottom: 1px solid var(--text-colour);
+    padding: 1rem;
+    transition: background-color .3s ease;
+}
+
+#email-entry:hover {
+    background-color: var(--highlighted-colour);
+}
+
+.email-pfp {
+    border-radius: 50%;
+    height: 6.5dvh;
+    width: 6.5dvh;
+    box-shadow: var(--muted-colour) .25dvh .25dvh .25dvh 0;
+    margin-right: 1dvw;
+}
+
+#notif-icon {
+    margin-left: 2dvh;
+    height: 5dvh;
+    width: 5dvh;
+}
+
+#sender-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#email-info * {
+    margin: 0;
+    line-height: 1.75rem;
+}
+
+#email {
+    padding: 2rem;
+    padding-top: 0;
+}
+
+#email-header * {
+    padding-left: 2rem;
+    border-bottom: 1px dashed var(--text-colour);
+}
+
+#email-header h2 {
+    line-height: .5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+}
+
+.window-content{
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 55dvh;
+
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
+.window-content::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
+}
