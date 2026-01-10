@@ -142,7 +142,21 @@ anyways if i get better at this, i think it can also help me understand how to t
 
 ## overthinking
 
+this is probably one of the biggest problems i think i have. i dont really know exactly when it started but it was definitely after i started feeling self-conscious. although it probably saved me many times, especially in social situations, i really think that its starting to limit what i feel comfortable doing. while im not saying that i wanna do anything and everything, i think i have a lot of missed opportunities and misunderstandings caused by it.
+
+ok well honestly, idk if i would call it misunderstandings but more that i kinda shut down. this happens often when im getting scolded (either by parents or teachers). i still remember in elementary school when i got into a lot of trouble (cuz i wasnt exactly a great kid) but every time i would go to the principals office, i would kinda just sit there and not say anything. 
+
+this issue didnt really dawn on me until i reached high school. we had french in one of the smaller rooms and idk why but i decided to say a snarky remark directed to our teacher. it didnt take long for me to end up in the principals office but when they asked why i did that or if i thought it was appropriate i just shut down. in my mind i was thinking if it was worth it to even say anything. my thoughts were that if i said more i would probably get into more trouble cuz theyll call my parents but i also thought that if i admitted it then they would punish me harder. so it was really just who i wanted to get scolded by. since i didnt say anything, i ended up getting scolded by both *sob*.
+
+it does mostly happen when i think im gonna get in trouble but it really happens when im writing. its honestly just getting annoying. i end up deleting things and thinking too much about the specifics like whether to rephrase a sentence or use another word. it just ends up taking too much time for me to finish writing something but another problem is when im texting. its probably cuz i dont really text anyone other than my close friends that i game with but i dont really know what to do if they dont respond. it just sits in the back of my mind and ends up becoming too taxing. at some point ill just send another message or try to clear myself of any misunderstandings like "sorry i was doing ___ so i couldnt respond" or "i went to sleep early srry". i dont know why i do this but i just dont want them to think that im ignoring them.
+
+anyways i should probably fix this. im not really sure how but hopefully u can give me some ideas. 
+
 ## pride
+
+i think that my pride is another thing i really need to fix. id like to think of it in two parts: my cultural identity and wanting to be right.
+
+
 
 ill probably have more stuff here but im not too sure how ill add them. its also kinda weird to talk about problems right? idk maybe im the weird one here
 
