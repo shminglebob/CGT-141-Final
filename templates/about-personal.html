@@ -27,12 +27,14 @@
         <img id="desktop-background" src="{{ url_for('static', filename='images/textures/desktop background.png') }}">
         
         <div id="desktop-apps">
-            <button onclick="openWindow('mail')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/email icon.png')}});"></button>
+            <button onclick="openWindow('mail')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/email icon.png')}});">
+                <img id="notification-icon" src="{{ url_for('static', filename='images/icons/one notification.png') }}">
+            </button>
             <button onclick="openWindow('search')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/search icon.png')}});"></button>
             <button onclick="openWindow('messages')" class="app-button" style="--button-bg: url({{ url_for('static', filename='images/icons/message icon.png')}});"></button>
         </div>
 
-        <div class="window" data-window-key="mail" id="emails-window">
+        <div class="window" style="display: none;" data-window-key="mail" id="emails-window">
             <div class="title-bar">
                 <button class="title-close" onclick="closeWindow('mail')">x</button>
             </div>
@@ -54,26 +56,30 @@
                         <h1>subject: about me</h1>
                         <h2>jeric -> reader</h2>
                     </div>
-                    <div class="window-content" id="email">
+                    <div class="window-content" style="height: 65dvh; padding-bottom: 0;" id="email">
                         {{ md['about me'] | safe }}
                         {{ md['afterword'] | safe }}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="window" data-window-key="search" id="search-engine">
+        <div class="window" style="display: none;" data-window-key="search" id="search-engine">
             <div class="title-bar">
+                <button id="patch-notes-button" onclick="openTab('patch-notes')" class="search-tab selected-tab">patch notes</button>
+                <button id="blog-button" onclick="openTab('blog')" class="search-tab">blog</button>
                 <button class="title-close" onclick="closeWindow('search')">x</button>
             </div>
-            <div id="patch-notes">
-                <h1>my goals</h1>
-                {{ md['my goals'] | safe }}
-            </div>
-            <div id="blog">
-                {{ md['what i like'] | safe }}
+            <div class="window-content">
+                <div id="patch-notes">
+                    <h1 style="display: inline-block"> my goals</h1> 
+                    {{ md['my goals'] | safe }}
+                </div>
+                <div id="blog">
+                    {{ md['what i like'] | safe }}
+                </div>
             </div>
         </div>
-        <div class="window" data-window-key="messages" id="messenger-window">
+        <div class="window" style="display: none;" data-window-key="messages" id="messenger-window">
             <div class="title-bar">
                 <button class="title-close" onclick="closeWindow('messages')">x</button>
             </div>

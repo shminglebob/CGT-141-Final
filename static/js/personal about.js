@@ -36,8 +36,6 @@ for (const key in windows) {
     closeWindow(key);
 }
 
-openWindow('mail');
-
 const desktop = document.getElementById('desktop');
 
 let dragOffset, currWindow, currTitlebar,
@@ -75,7 +73,8 @@ desktop.addEventListener('pointermove', e => {
 
 //  open email
 const email = document.getElementById('about-me-email'),
-    notif = document.getElementById('notif-icon');
+    notif = document.getElementById('notif-icon'),
+    desktopNotif = document.getElementById('notification-icon');
 
 let emailOpened = false;
 
@@ -85,5 +84,33 @@ function openEmail() {
 
     email.style.display = 'block';
     notif.style.display = 'none';
+    desktopNotif.style.display = 'none';
     emailOpened = true;
+}
+
+const patchNotesTab = document.getElementById('patch-notes'),
+    blogTab = document.getElementById('blog'),
+    patchNotesButton = document.getElementById('patch-notes-button'),
+    blogButton = document.getElementById('blog-button');
+
+let currentTab = 'patch-notes';
+
+function openTab(id) {
+    if (id == currentTab)
+        return
+
+    if (id == 'patch-notes') {
+        patchNotesTab.style.display = 'block';
+        blogTab.style.display = 'none';
+        blogButton.classList.remove('selected-tab');
+        patchNotesButton.classList.add('selected-tab');
+    }
+    else {
+        patchNotesTab.style.display = 'none';
+        blogTab.style.display = 'block';
+        blogButton.classList.add('selected-tab');
+        patchNotesButton.classList.remove('selected-tab');
+    }
+    
+    currentTab = id;
 }

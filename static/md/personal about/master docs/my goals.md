@@ -1,3 +1,5 @@
+these are just my goals. i made it like patch notes since its probably subject to quite a bit of change. especially if i dont think something is feasible.
+
 ## game dev
 
 i think i want to develop a game. or at least start. i made a game dev doc for one of my finals that i was quite proud of so i think that i wanna try and make it. its probably gonna be pretty hard but im hoping i wont give up on this one lol.
@@ -16,7 +18,7 @@ personally i think that i should do something to at least give back to employees
 
 anyways these are my goals for next year (and some longer term goals). but i think that i want to work and try and help myself.
 
-# updates #1
+# updates v2025.1
 
 hey im back
 
@@ -28,7 +30,7 @@ now for the change to my last goal. since im still on this vacation, i wanted to
 
 anyways thats all i had come up with so far. ill just update this whenever i feel like it. originally it was supposed to be like a yearly thing for like "new years resolutions" but i honestly think that ill just forget it about lol. a year is too long for someone as forgetful as me.
 
-# updates #2
+# updates v2025.2
 
 lol im back again but i wanna update the last goal again
 

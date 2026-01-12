@@ -28,7 +28,7 @@ i think **posse** by *kmnk* is a really catchy song. its one of the few songs th
 
 anyways the next song is **balalaika** by *9lana*. i think this song is pretty catchy and the artist has a similar sound to *ado* not to say that they sound similar but thats how i view it at least. also i do enjoy *ado*'s songs but i think i genuinely listened to too much of her i got sick of her voice. im not saying she is a bad artist or anything but i genuinely listened 24/7 so pls dont attack me *cry emoji*. besides i still enjoy her music but i have to limit myself now. anyways back to the song. i prefer the acoustic version of this song which released quite a bit after the original. i think i prefer the acoustic version tho because it feels more sincere. its not like its objectively better or something but i just think its more mellow. 
 
-anyways please take whatever bs i write with a grain of salt. im not always correct and i dont know too much about music. so dont bully me :(
+if u care heres the link to my spotify account with all [my playlists](https://open.spotify.com/user/k7ktrbm5i9wkdu1hny8fxqc2k?si=cb635d9ba0a54314). anyways please take whatever bs i write with a grain of salt. im not always correct and i dont know too much about music. so dont bully me :(
 
 # games
 
