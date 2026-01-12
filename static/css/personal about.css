@@ -26,6 +26,7 @@
 .spotify-embeds {
     display: flex;
     flex-direction: row;
+    gap: 1rem;
 }
 
 html {
