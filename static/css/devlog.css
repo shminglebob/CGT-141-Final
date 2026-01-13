@@ -3,16 +3,6 @@
     text-shadow: .2rem .2rem var(--shadow-colour);
 }
 
-.diagram {
-    mask-image: var(--src);
-    mask-repeat: no-repeat;
-    mask-size: contain;
-    margin-top: 8rem;
-    width: min(25rem, 50dvw);
-    height: min(25rem, 50dvw);
-    background-color: var(--primary-colour);
-}
-
 .subtext {
     font-size: 0.9rem;
 }
@@ -124,4 +114,15 @@ h2{
 
 h3, h4 {
     border-bottom: dotted max(.125dvh, 2px) var(--primary-colour);
+}
+
+img {
+    float: right;
+    width: 35%;
+    border-radius: 5dvw;
+    margin: 2.5%;    
+}
+
+h1, h2, h3, h3 {
+    clear: both;
 }

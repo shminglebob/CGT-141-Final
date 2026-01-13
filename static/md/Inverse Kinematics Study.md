@@ -21,7 +21,7 @@ Now that we know what inverse kinematics is and what it's used for, we can talk 
 
 ## Two-Link Inverse Kinematics
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Labelled Diagram.png');"></div>
+<img src="/static/images/devlogs/inverse-kinematics/Two-Link Diagram.png">
 
 While this problem might seem daunting at first, it really isn't that hard of a problem to solve. This is especially apparent when we draw a diagram, but first we should know what we have and are looking for. First, what we know:
 
@@ -37,8 +37,9 @@ Now that we know what we get to work with, let's define what we need to try and 
 
 ### Solving the System
 
-The easiest way to understand the problem is to draw a diagram (see top right).
+<img src="/static/images/devlogs/inverse-kinematics/Three-Link Target Diagram.png">
 
+The easiest way to understand the problem is to draw a diagram (see top right).
 
 Using this diagram, it is much easier to see that we are essentially just solving a triangle. If you know how to use <a href="https://en.wikipedia.org/wiki/Law_of_cosines" target="_blank" class="info-hover">law of cosines</a>, its very easy to see where this is going but for those of you who don't, I will explain below.
 
@@ -99,7 +100,7 @@ Now we need to talk about what we are trying to find. I moved $d$ and $\theta_E$
 
 ### Solving the System
 
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/P_T Diagram.png'); margin-left: 1rem;"></div>
+<img src="/static/images/devlogs/inverse-kinematics/Three-Link Diagram.png">
 
 The easiest way to understand and solve this problem is by projecting the entire equation onto a plane and solving as if it was a system in $\mathbb{R}^2$.  Projecting something onto a plane might sound scary but we can just fake it by rotating the entire system to be on the xy-plane then rotating it back after. 
 
@@ -141,8 +142,6 @@ We have two options from here, we can take the easy way out which leads to reall
 The easy way is really straightforward but the downside is that if $P_T$ isn't lying in the same plane as $O$ and $E$, then it will look very weird. If you do want to do this way and you don't really care how the system responds to the last joint's orientation, then you can quite literally just set the last joint's up vector to be $E_y$.
 
 ### The Natural Hard Way
-
-<div class="float-right mx-auto diagram" style="--src: url('/static/images/devlogs/inverse-kinematics/Theta_2 Diagram.png'); margin-left: 1rem;"></div>
 
 To make it more natural we need to solve for, $\theta_2$. This one is a bit harder than the other $\theta$'s but it's easier to understand once we draw a diagram. To do this we need the up and forward vector of the 3rd joint (given we rotated over the x-axis), namely $J_y, J_z$. Finally, to calculate $\theta_2$ we need to find the $x$ and $y$ values in the 3rd joint's coordinate frame, we will call them $j_y$ and $j_z$:
 
@@ -195,4 +194,52 @@ To ensure your math will work out, please rotate the angles in this specific ord
 <div class="clear"></div>
 
 #  Implementation in Unity C\#
-This will be added later for the sake of time (I need to finish this final).
+
+Coding this Unity is actually pretty simple. I'll show how to code it in 2D then later project it into a 3D space. I really hope that you actually try and understand the math and how it works instead of just copying the code.
+
+### 2D Implementation
+
+In case you didn't read the math behind it, the problem we are essentially solving is just completing a triangle given all three side lengths. To do this we will just need to solve for some stuff before we can apply the cosine law.
+
+I do want to just state that I will be solving this in a xy-plane. If you are making this for a 2D game in Unreal Engine for example, you will just need to replace the y-axis with the z-axis.
+
+There are two ways we can actually solve this in Unity but it just depends on the use case:
+
+- Bone Joints System - Calculates the rotation and applies it on the joints to have the end effector reach the target
+- Position System - Calculates the position of each joint and sets their positions to it. Rotations are completely ignored in this system. (Don't use this if you have a skinned mesh renderer like a bone)
+
+The "better" solution is often the bone joints system as it should be cheaper and is fairly easy to understand. Inverse kinematics is also used most of the time for animation so its likely the system is already setup for this way.
+
+Honestly for the second system, I really don't know what you could use it for. The only time I've personally used it is for debugging and checking if my math works or if it's Unity that's broken. Anyways, the main drawback of this system is more setup and it not having really having any rotation built-in.
+
+#### Setup for Both Systems
+
+Anyways, we let's define the variables we know:
+
+```csharp
+public Transform origin; // also known as the shoulder joint transform
+public Transform target; // what we are trying to reach
+
+public Transform joint1; // the intermediate joint, the one between the origin and end effector
+public Transform endEffector; // the transform for the end effector
+public float l1, l2; // the link lengths
+
+//	These are only used if solving a 3-link system
+public Transform joint2; // the second-last joint 
+public float l3; // the final link length
+```
+
+Next let's define what we'll need to solve for:
+
+```csharp
+public float d; // distance between origin and target
+public float angI; // the angle from the axis to the vector made from origin - target
+public float ang1; // the angle of the first joint
+
+public float ang2; // the angle of the second joint (used only in 3-link systems)
+
+```
+
+Here's a diagram of everything to make it easier to understand:
+
+<img src="/static/images/devlogs/inverse-kinematics/2D Unity Implementation Diagram.png">
