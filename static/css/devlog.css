@@ -107,7 +107,11 @@ img {
     margin: 2.5%;    
 }
 
-h1, h2, h3, h3 {
+[data-theme="dark"] img {
+    outline: 1dvw solid var(--primary-colour);
+}
+
+h1, h2, h3, h3, h4 {
     clear: both;
 }
 
