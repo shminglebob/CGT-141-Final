@@ -240,6 +240,23 @@ public float ang2; // the angle of the second joint (used only in 3-link systems
 
 ```
 
-Here's a diagram of everything to make it easier to understand:
-
 <img src="/static/images/devlogs/inverse-kinematics/2D Unity Implementation Diagram.png">
+
+Now we need to calculate these values. It should be pretty simple since we can use the math library that Unity provides:
+
+This code below should allow you to calculate the values correctly. There might be some offsets you still have to apply like $\pi - \theta$ or something similar but its different depending on your setup. Also make sure to convert all your angles back to degrees as it might cause some errors otherwise.
+
+```csharp
+//	Calculate distance & angI first
+d = Vector3.Distance(origin.position, target.position); // Vector2.Distance also works
+
+Vector2 localTargetPos = new Vector2(target.position.x - origin.position.x, target.position.y - origin.position.y);
+angI = Mathf.Atan2(localTargetPos.y, localTargetPos.x); // Atan2 uses y then x idk why lol
+
+//	There might be offsets you might have to add when calculating
+ang1 = Mathf.Acos((l1*l1 + d*d - l2*l2) / (2 * l1 * d)); // ang1 is opposite of l2
+ang2 = 2 * Mathf.PI - Mathf.Acos((l1*l1 + l2*l2 - d*d) / (2 * l1 * l2)); // its an exterior angle so offset accordingly
+```
+
+
+

@@ -11,22 +11,6 @@
     margin: auto;
 }
 
-.float-right {
-    float: right;
-}
-
-@media (max-aspect-ratio: 3/2) {
-    .float-right {
-        float: none;
-        display: block;
-        margin: 1rem auto;
-    }
-}
-
-.clear {
-    clear: both;
-}
-
 .inline-block {
     display: inline-block;
 }
@@ -119,10 +103,17 @@ h3, h4 {
 img {
     float: right;
     width: 35%;
-    border-radius: 5dvw;
+    border-radius: 2.5dvw;
     margin: 2.5%;    
 }
 
 h1, h2, h3, h3 {
     clear: both;
+}
+
+@media (max-aspect-ratio: 3/2) {
+    img {
+        width: 55%;
+        margin: 2.5%;
+    }
 }
