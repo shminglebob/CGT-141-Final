@@ -116,11 +116,99 @@ If we were doing this completely from scratch this section would be quite a bit 
 
 ### Body Height Calculation
 
+Since this is a script that runs per frame, we can't have something where it depends on the next frame. Meaning that we cannot have a circular dependency. If we really wanted to solve for the body's absolute position as in it lies in the middle of the four furthest legs plus a local y offset, it will just be stuck in place since we are overriding any movement. To avoid this, we will just solve for height as it looks natural enough and still provides enough freedom for the spider to move.
 
+<img src="/static/images/devlogs/spider/Height Leg Setup Diagram.png">
+
+First, we need to find the mid-point of the four furthest legs. For the sake of modularity, I decided that it would be the four legs if all legs in between each side are removed (essentially just the corners).
+
+What we need to solve for to calculate the height is the $t$ value where the vectors pointing to the opposite legs intersect. We will call them $\vec p$ and $\vec q$ and the points $p_1, p_2, q_1, q_2$ where the $p$ points make up $\vec p$ and the $q$ points make up $\vec q$.
+
+These points we can get by projecting the points onto a plane that has the body's up vector as the normal. Given the body's normalized up vector is $B$ and our points are named $l_f,l_r,r_f,r_r$ where $l$ is left, $r$ is right and $_f$ is front, $_r$ is rear:
+$$
+p_1=\frac{l_f\cdot B}{||B||^2}B\\
+$$
+$$
+p_2=\frac{r_r\cdot B}{||B||^2}B\\
+$$
+$$
+q_1=\frac{r_f\cdot B}{||B||^2}B\\
+$$
+$$
+q_2=\frac{l_r\cdot B}{||B||^2}B
+$$
+
+
+Using [Cramer's Rule](https://en.wikipedia.org/wiki/Cramer%27s_rule#Explicit_formulas_for_small_systems), we can solve for the value $t$ using this formula:
+$$
+t=\frac{(q_{1x}-p_{1x})(q_{2z}-q_{1z})-(q_{1z}-p_{1z})(q_{2x}-q_{1x})}{(p_{2x}-p_{1x})(q_{2z}-q_{1z})-(p_{2z}-p_{1z})(q_{2x}-q_{1x})}
+$$
+After getting $t$, we can now find the midpoint by subbing in the values like so:
+$$
+(x,z)=(p_1x,p_1z)+t\cdot\vec p
+$$
+
+Now we need to calculate the $t$ values per vector, so $t_p$ and $t_q$. To do so, we need the positions of the joints. We don't want to use $\vec p$ or $\vec q$ here.
+<div class="math">
+$$
+t_p=\frac{x-l _{fx}}{(r _r-l _f) _x}
+$$
+$$
+t_q=\frac{x-r _{fx}}{(l _r-r _f) _x}
+$$
+</div>
+Next we calculate the y-position of both $\vec p$ and $\vec q$ when we plug in their respective $t$ values:
+<div class="math">
+$$
+y_{p}=(r _r-l _f) _y\cdot t _p+l _{fy}
+$$
+$$
+y_{q}=(l _r-r _f) _y\cdot t _q+r _{fy}
+$$
+</div>
+These values are probably pretty different so we just take the average of the two and use it as the desired height. Since we do want to be able to tweak the value of the body and not fix it to the desired height, let's introduce a controllable external variable, $d_y$ which represents the distance from the desired height.
+
+Finally we get our height which is:
+$$
+\frac{y_p+y_q}2+d_y
+$$
 
 ### Body Tilt Calculation
 
+Calculating the body's tilt is another way we can make the body's movements seem more natural. To do this, we need to create a plane that somewhat accommodates all four of the same points used in height calculations.
 
+<img src="/static/images/devlogs/spider/Tilt Calculation Diagram.png">
+
+There are more accurate ways of getting a plane to fit the four points using different algorithms but since it is a game and we need to accommodate lower-end specs, we use an easier and less computationally expensive way.
+
+First, we take all the normal vectors that we can make using different combinations of adjacent vectors. This means that these two vectors should share one point. To get these normal vectors, we just take the cross product then normalize it. Let's get the cross products first:
+<div class="math">
+$$
+c_1=(l_f-r_f)\times(r_r-r_f)
+$$
+$$
+c_2=(r_f-r_r)\times(l_r-r_r)
+$$
+$$
+c_3=(r_r-l_r)\times(l_f-l_r)
+$$
+$$
+c_4=(l_r-l_f)\times(r_f-l_f)
+$$
+$$
+n_1=\frac{c_1}{|c_1|}
+$$
+$$
+n_2=\frac{c_2}{|c_2|}
+$$
+$$
+n_3=\frac{c_3}{|c_3|}
+$$
+$$
+n_4=\frac{c_4}{|c_4|}
+$$
+</div>
+After getting these normal vectors, we take the average, $n=\frac{n_1+n_2+n_3+n_4}4$. We then project the body's forward vector onto a plane that uses $n$ as its normal vector. We'll call this $B_f$ which stands for body forward. Using quaternions, we can set the body's forward to be equal to $B_f$ and the tilt calculations are complete.
 
 # Full Script Explanation
 

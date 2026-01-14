@@ -71,7 +71,7 @@ def parse_md_file(path: str):
     text = replace_github_alerts(text)
     text = render_shiki(text)
 
-    md = markdown.Markdown(extensions=["admonition", "toc", "extra"])
+    md = markdown.Markdown(extensions=['admonition', 'toc', 'tables', 'fenced_code', 'def_list', 'footnotes'])
     markdown_content = md.convert(text)
 
     return title, markdown_content
