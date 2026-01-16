@@ -1,0 +1,4 @@
+.sketchfab-embed-wrapper, .sketchfab-embed-wrapper>iframe {
+    width: 60dvw;
+    height: 30dvh;
+}

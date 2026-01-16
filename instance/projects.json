@@ -7,7 +7,8 @@
             "unity",
             "c#",
             "math"
-        ]
+        ],
+        "is-devlog": true
     },
     "spider": {
         "title": "procedurally animated spider",
@@ -17,6 +18,11 @@
             "unity",
             "c#",
             "procedural animation"
-        ]
+        ],
+        "is-devlog": true
+    },
+    "cgt-116": {
+        "md-path": "CGT-116.md",
+        "is-devlog": false
     }
 }

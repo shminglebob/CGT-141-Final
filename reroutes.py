@@ -1,22 +1,5 @@
 from database import *
 
-# ----- github-style alert replacements -----
-
-github_alert_replacements = {
-    '> [!important]': '!!! important',
-    '> [!warning]':  '!!! warning',
-    '> [!note]':     '!!! note',
-    '> [!tip]':      '!!! tip',
-}
-
-def replace_github_alerts(text: str) -> str:
-    lines = text.splitlines()
-    for i, l in enumerate(lines):
-        stripped = l.strip()
-        if stripped in github_alert_replacements:
-            lines[i] = github_alert_replacements[stripped]
-    return "\n".join(lines)
-
 # ----- shiki integration -----
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -68,7 +51,6 @@ def parse_md_file(path: str):
     with open(path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    text = replace_github_alerts(text)
     text = render_shiki(text)
 
     md = markdown.Markdown(extensions=['admonition', 'toc', 'tables', 'fenced_code', 'def_list', 'footnotes'])
@@ -158,7 +140,9 @@ def about():
 def projects():
     ensure_projects_loaded()
 
-    return render_page('projects.html', 'projects', request, projects_json=projects_json)
+    visible_devlogs = { slug : project for slug, project in projects_json.items() if project['is-devlog'] }
+
+    return render_page('projects.html', 'projects', request, projects_json=visible_devlogs)
 
 @app.route('/devlog')
 @app.route('/devlog/')
@@ -220,6 +204,16 @@ def about_me_letter():
     
     return render_template('letter.html', md=rendered_about)
     
+@app.route('/cgt-116')
+def cgt116_home():
+    ensure_projects_loaded()
+    theme = request.cookies.get('theme', 'light')
+
+    title, parsed_md = fetch_md('cgt-116')
+
+    return render_template('CGT116-home.html', theme=theme, current_page='cgt-116',
+                           markdown_content=parsed_md, devlog_title=title)
+
 def render_page(path, page_name, request, **kwargs):
     theme = request.cookies.get('theme', 'light')
 
