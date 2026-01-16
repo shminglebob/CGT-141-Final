@@ -133,7 +133,7 @@ $$
 
 </p>
 
-Now we have everything we need and should be able to shove all of this information into our <a href="/devlog#solving-the-system">two-link solver</a> where instead of $E$ we just use $P_T$. Assuming you did that, we now have $\theta_0$ and $\theta_1$. 
+Now we have everything we need and should be able to shove all of this information into our <a href="/devlog/inverse-kinematics#solving-the-system">two-link solver</a> where instead of $E$ we just use $P_T$. Assuming you did that, we now have $\theta_0$ and $\theta_1$. 
 
 We have two options from here, we can take the easy way out which leads to really weird edge cases or we can do the hard way where it looks somewhat natural.  
 
@@ -320,9 +320,9 @@ joint1.position = pos1;
 
 Since we are returning when the target is out of range, we don't actually need to calculate the end effector's position since it should be the target's position. This also means we technically don't need to calculate `ang2`.
 
-````csharp
+```csharp
 endEffector.position = target.position;
-````
+```
 
 This one does get a lot more complicated in a three-link system.
 
