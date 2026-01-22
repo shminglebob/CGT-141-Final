@@ -466,7 +466,7 @@ leg.leg.target.up = leg.skewRotation * leg.rawUp;
 
 To start with these calculations, we need to get the vector that we want to rotate around. First, we need to think how we want this to rotate. Initially, I did want to rotate the vector made from the leg's second joint position - body's position but it didn't seem to achieve what I wanted it to. I wanted it to rotate around the body instead of on an axis but I had to compromise with using an orthonormal vector given by `body.up` and `velocity`. Here's a diagram of what the vector should look like and how we calculate it:
 
-<img src="/static/images/devlog/spider/orthoVelocity Diagram">
+<img src="/static/images/devlog/spider/orthoVelocity Diagram.png">
 
 After calculating this vector, we need to get the dot product between the normalized velocity and normalized vector similar to which I had described earlier. This dot product is what's used to determine whether the leg is a front leg or hind leg. While this may seem simple where we can just label the first half of each leg group as front legs and latter half as the hind legs, this isn't actually correct. This is due to the fact that the velocity isn't always along `body.forward`, sometimes it might be moving to the side and we need to lean accordingly. 
 
