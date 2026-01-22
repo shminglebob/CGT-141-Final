@@ -108,107 +108,7 @@ I used a normal `for` loop here as we need `i` for alternating legs and to expla
 - `(i % 2 == offset) == groupOneMoving` 
     - `groupOne` in this case would be the `leg0` of that group and by using the offset in `i % 2 == offset` we can add an offset so that both sides don't move the same index leg at the same time.
 
-- `!leg.isStepping` - that the IK target is not already interpolating towards the ground target. This one is important!
-
-## The Math behind the Code
-
-If we were doing this completely from scratch this section would be quite a bit longer but since we can utilize Unity's built in mathematics libraries it makes our lives easier.
-
-### Body Height Calculation
-
-Since this is a script that runs per frame, we can't have something where it depends on the next frame. Meaning that we cannot have a circular dependency. If we really wanted to solve for the body's absolute position as in it lies in the middle of the four furthest legs plus a local y offset, it will just be stuck in place since we are overriding any movement. To avoid this, we will just solve for height as it looks natural enough and still provides enough freedom for the spider to move.
-
-<img src="/static/images/devlogs/spider/Height Leg Setup Diagram.png">
-
-First, we need to find the mid-point of the four furthest legs. For the sake of modularity, I decided that it would be the four legs if all legs in between each side are removed (essentially just the corners).
-
-What we need to solve for to calculate the height is the $t$ value where the vectors pointing to the opposite legs intersect. We will call them $\vec p$ and $\vec q$ and the points $p_1, p_2, q_1, q_2$ where the $p$ points make up $\vec p$ and the $q$ points make up $\vec q$.
-
-These points we can get by projecting the points onto a plane that has the body's up vector as the normal. Given the body's normalized up vector is $B$ and our points are named $l_f,l_r,r_f,r_r$ where $l$ is left, $r$ is right and $_f$ is front, $_r$ is rear:
-$$
-p_1=\frac{l_f\cdot B}{||B||^2}B\\
-$$
-$$
-p_2=\frac{r_r\cdot B}{||B||^2}B\\
-$$
-$$
-q_1=\frac{r_f\cdot B}{||B||^2}B\\
-$$
-$$
-q_2=\frac{l_r\cdot B}{||B||^2}B
-$$
-
-
-Using [Cramer's Rule](https://en.wikipedia.org/wiki/Cramer%27s_rule#Explicit_formulas_for_small_systems), we can solve for the value $t$ using this formula:
-$$
-t=\frac{(q_{1x}-p_{1x})(q_{2z}-q_{1z})-(q_{1z}-p_{1z})(q_{2x}-q_{1x})}{(p_{2x}-p_{1x})(q_{2z}-q_{1z})-(p_{2z}-p_{1z})(q_{2x}-q_{1x})}
-$$
-After getting $t$, we can now find the midpoint by subbing in the values like so:
-$$
-(x,z)=(p_1x,p_1z)+t\cdot\vec p
-$$
-
-Now we need to calculate the $t$ values per vector, so $t_p$ and $t_q$. To do so, we need the positions of the joints. We don't want to use $\vec p$ or $\vec q$ here.
-<div class="math">
-$$
-t_p=\frac{x-l _{fx}}{(r _r-l _f) _x}
-$$
-$$
-t_q=\frac{x-r _{fx}}{(l _r-r _f) _x}
-$$
-</div>
-Next we calculate the y-position of both $\vec p$ and $\vec q$ when we plug in their respective $t$ values:
-<div class="math">
-$$
-y_{p}=(r _r-l _f) _y\cdot t _p+l _{fy}
-$$
-$$
-y_{q}=(l _r-r _f) _y\cdot t _q+r _{fy}
-$$
-</div>
-These values are probably pretty different so we just take the average of the two and use it as the desired height. Since we do want to be able to tweak the value of the body and not fix it to the desired height, let's introduce a controllable external variable, $d_y$ which represents the distance from the desired height.
-
-Finally we get our height which is:
-$$
-\frac{y_p+y_q}2+d_y
-$$
-
-### Body Tilt Calculation
-
-Calculating the body's tilt is another way we can make the body's movements seem more natural. To do this, we need to create a plane that somewhat accommodates all four of the same points used in height calculations.
-
-<img src="/static/images/devlogs/spider/Tilt Calculation Diagram.png">
-
-There are more accurate ways of getting a plane to fit the four points using different algorithms but since it is a game and we need to accommodate lower-end specs, we use an easier and less computationally expensive way.
-
-First, we take all the normal vectors that we can make using different combinations of adjacent vectors. This means that these two vectors should share one point. To get these normal vectors, we just take the cross product then normalize it. Let's get the cross products first:
-<div class="math">
-$$
-c_1=(l_f-r_f)\times(r_r-r_f)
-$$
-$$
-c_2=(r_f-r_r)\times(l_r-r_r)
-$$
-$$
-c_3=(r_r-l_r)\times(l_f-l_r)
-$$
-$$
-c_4=(l_r-l_f)\times(r_f-l_f)
-$$
-$$
-n_1=\frac{c_1}{|c_1|}
-$$
-$$
-n_2=\frac{c_2}{|c_2|}
-$$
-$$
-n_3=\frac{c_3}{|c_3|}
-$$
-$$
-n_4=\frac{c_4}{|c_4|}
-$$
-</div>
-After getting these normal vectors, we take the average, $n=\frac{n_1+n_2+n_3+n_4}4$. We then project the body's forward vector onto a plane that uses $n$ as its normal vector. We'll call this $B_f$ which stands for body forward. Using quaternions, we can set the body's forward to be equal to $B_f$ and the tilt calculations are complete.
+- `!leg.isStepping` - that the IK target is not already interpolating towards the ground target. **This one is important!**
 
 # Full Script Explanation
 
@@ -389,7 +289,7 @@ These are used for stepping. `numSteps` and `stepsCompleted` are required but `g
 These are calculated and used only in the `Update` loop. These are used to calculate the interpolated `stepTime`, `leadDist` and the two `leanAngles`.
 
 - `prevBodyPos` - this is just last frame's position of the body. It's used to calculate the `rawVelocity`.
-- `rawVelocity` - this is the velocity computed by simply subtracting the current position by `prevBodyPos` then divided by `Time.deltaTime`. **This is, however, projected onto a plane constructed by `body.up`.** The reason for this is to not skew the magnitude when moving up and down. 
+- `rawVelocity` - this is the velocity computed by simply subtracting the current position by `prevBodyPos` then divided by `Time.deltaTime`. **This is, however, projected onto a plane orthogonal to `body.up`.** The reason for this is to not skew the magnitude when moving up and down. 
 - `velocity` - this is a smoothed version of `rawVelocity`. The reason for this is because it causes quite a bit of jitteryness without this. If you're curious, just do `Debug.DrawRay(body.pos, rawVelocity);` and you will see how unstable it is. This just prevents weird jitteryness in other parts of the code.
 - `vMag` - this is just the magnitude of the `velocity`, it's completely optional but makes debugging easier.
 
@@ -499,13 +399,362 @@ The first two lines of this section do a whole bunch of stuff and calculations t
 
 #### UpdateLegGroup()
 
+The purpose of this function is to shoot raycasts for each of the legs and check whether its distance to the IK target is greater than `minDelta` or `maxDelta` depending on the situation. There are some extra calculations that are done purely for cosmetic reasons (velocity lean and whatnot) so it is possible to remove it if need be.
+
+```csharp
+void UpdateLegGroup(Leg[] legGroup, int offset) { ... }
+```
+
+##### Parameters
+
+- `Leg[] legGroup` - this represents which group of legs we are updating. Either `leftLegs` or `rightLegs`.
+- `int offset` - this is an offset for the if statement calculations. It affects whether to mark the first leg of the array as part of the first group or the second. Without this, the legs which have the same indices would move together.
+
+Everything in this function is wrapped in a for loop which iterates over each leg as so:
+
+```csharp
+for (int i = 0; i < legGroup.Length; i++) {
+    ...
+}
+```
+
+While it is possible to use a `foreach` loop, we want to use `i` in our calculations later on (especially the alternating legs). First, let's create some local variables.
+
+```csharp
+Leg leg = legGroup[i];
+leg.leg.transform.position = leg.pivot.position;
+
+RaycastHit hit;
+onGround = Physics.Raycast(groundPos + leg.groundTarget.up * 
+       maxRaycastDist / 2, -legGroundTarget.up, out hit, maxRaycastDist, groundMask);
+
+float dist = Vector3.Distance(hit.point, leg.leg.target.position);
+```
+
+Okay, so this might look a little weird with all the `leg.leg` references you might be seeing but that is literally just a reference to the inverse kinematics solver of the leg. If you want, just rename `Leg leg` to something else to make it a little more readable but I think its fine.
+
+Anyways to explain the code line by line now. So first, we just want to create a local variable because we will be using `leg` quite a lot. Next we want to anchor the shoulder joint of the leg to the set pivot transform that we assign. Next we want to check if there is a target that we can put the IK target at. By doing so, we can also check whether this leg is grounded or not. This definition of grounded is very loose since it will still count as grounded even if the leg's end effector isn't physically touching the ground (like mid-step or something).
+
+```csharp
+Physics.Raycast(groundPos + leg.groundTarget.up * maxRaycastDist / 2, 
+        -leg.groundTarget.up, out hit, maxRaycastDist, groundMask);
+```
+
+Since this line is somewhat confusing, I'll explain it further. Of course you can just always separate the values but I tend to want to reduce the lines of code in my scripts for the sake of optimization. Anyways, `groundPos + leg.groundTarget.up * maxRaycastDist / 2` is the starting position of the ray. What we want to do is offset the start position to be half of the assigned `maxRaycastDist` away from the actual `groundTarget` position. The diagram will illustrate it a little better because its somewhat hard to describe in words.
+
+<img src="/static/images/devlogs/spider/groundTarget Diagram.png">
+
+We are assuming that `groundTarget` is somewhat near the ground meaning that we should overshoot a little using $T_{gy}$. Our last step before we do some calculations after leg initialization is calculating the distance between the raycast's hit point and the leg's target position. This is what we are going to use to determine whether or not to take a step.
+
+##### Cosmetic Skew Rotation Calculations
+
+This chunk of the function does not work unless the leg has already been initialized, due to this it is wrapped by an `if (leg.initialized) { ... }`.
+
+```csharp
+Vector3 orthoVelocity = Vector3.Cross(velocity.normalized, body.up).normalized;
+
+float dot = Vector3.Dot(velocity.normalized, Vector3.ProjectOnPlane(leg.leg.target.position - leg.pivot.position, body.up).normalized);
+
+float maxLeanAngle = Mathf.Lerp(hindLeanAngle, frontLeanAngle, (dot + 1) / 2);
+
+float distanceLean = -maxLeanAngle * Mathf.Clamp01(dist / maxDelta);
+
+leg.skewRotation = Quaternion.Slerp(leg.skewRotation, Quaternion.AngleAxis(distanceLean, orthoVelocity), Time.deltaTime * legRotSmoothSpeed);
+
+leg.leg.target.up = leg.skewRotation * leg.rawUp;
+```
+
+To start with these calculations, we need to get the vector that we want to rotate around. First, we need to think how we want this to rotate. Initially, I did want to rotate the vector made from the leg's second joint position - body's position but it didn't seem to achieve what I wanted it to. I wanted it to rotate around the body instead of on an axis but I had to compromise with using an orthonormal vector given by `body.up` and `velocity`. Here's a diagram of what the vector should look like and how we calculate it:
+
+<img src="/static/images/devlog/spider/orthoVelocity Diagram">
+
+After calculating this vector, we need to get the dot product between the normalized velocity and normalized vector similar to which I had described earlier. This dot product is what's used to determine whether the leg is a front leg or hind leg. While this may seem simple where we can just label the first half of each leg group as front legs and latter half as the hind legs, this isn't actually correct. This is due to the fact that the velocity isn't always along `body.forward`, sometimes it might be moving to the side and we need to lean accordingly. 
+
+Anyways, the next step is to actually calculate how much we need to rotate. To do this we just need to lerp between `hindLeanAngle` and `frontLeanAngle` which we calculated using the velocity in the update loop. The `t` value for this lerp is `(dot + 1) / 2` as `dot`'s range is $[-1, 1]$ so we must transform that onto a $[0,1]$. We can then use this `maxLeanAngle` value and multiply it by how close the IK target's distance is to the max distance required for a step to occur.
+
+Afterwards, we just calculate rotation by using a simple `Slerp` and then multiplying the up vector of the IK target by this value.
+
+##### After Lean Angle Calculations
+
+This code is outside of the if statement that the previous block of code was in. This chunk serves to check whether the spider should take a step or not. 
+
+```csharp
+if (leg.isStepping || (groupOneMoving != (i % 2 == offset) && leg.initialized))
+    continue;
+
+if ((onGround && dist > maxDelta) || !leg.initialized
+|| (leg.restTimer < 0f && dist > minDelta))
+    UpdateLegPosition(leg, hit.point, hit.normal);
+leg.restTimer -= leg.restTimer < 0 ? 0 : Time.deltaTime;
+```
+
+The first if statement in this chunk is to prevent starting another step when some conditions aren't met. The first condition is pretty self-explanatory where we only want to take a step if it isn't already doing so. The second condition is a little more complicated. Essentially, what we want to check is whether or not the leg should be stepping at the current time. Since we have two groups, separated by alternating legs on either side, we use this condition `(groupOneMoving != (i % 2 == offset))`. `i % 2 == offset` alternates between `true` and `false` depending on `offset` and `i`. 
+
+The second if statement checks a bunch of things before taking a step. The first condition, `onGround && dist > maxDelta` is pretty self-explanatory, the second `!leg.initialized` is done as the code run through the if statement is what initializes the legs. The third condition is similar to the first one but we want to check whether the leg has rested for long enough and the distance is large enough for it to want to correct itself. 
+
+The last line is just ticks down the independent timer for each of the legs that tracks when it's okay to correct itself.
+
 #### UpdateLegPosition()
+
+This function serves two purposes, to initialize the leg and to call the interpolation function to start a step.
+
+```csharp
+void UpdateLegPosition(Leg leg, Vector3 pos, Vector3 normal) { ... }
+```
+
+##### Parameters
+
+- `Leg leg` - leg to update
+- `Vector3 pos` - position that the leg should move towards
+- `Vector3 normal` - the normal vector given by the raycast
+
+##### Leg Initialization
+
+```csharp
+if (!leg.initialized) {
+    leg.leg.target.position = pos;
+    leg.leg.target.up = -normal;
+    leg.rawUp = -normal;
+
+    leg.skewRotation = Quaternion.identity;
+
+    leg.initialized = true;
+    return;
+}
+```
+
+This code simply just initializes the leg by setting some default values.
+
+##### Stepping Code
+
+```csharp
+if (!leg.isStepping) {
+    leg.restTimer = timeBeforeRest;
+
+    leg.startInterpolationTime = Time.time;
+    leg.startPosition = leg.leg.target.position;
+    leg.startUp = leg.leg.target.up;
+
+    leg.targetPosition = pos;
+    leg.targetUp = -normal;
+
+    leg.rawUp = -normal;
+
+    leg.isStepping = true;
+
+    numSteps++;
+
+    StartCoroutine(InterpolateLeg(leg));
+}
+```
+
+Most of the code just sets up the initial values so that the `InterpolateLeg` coroutine function works correctly. Each of the variables and what they do are listed below:
+
+- `leg.startInterpolationTime` - this is used to calculate the `t` value while interpolating since we need to store the time elapsed since the function call
+- `leg.startPosition` - the `a` value of the `lerp`
+- `leg.startUp` - the `a` value of the `Slerp`
+- `leg.targetPosition` - the `b` value of the `lerp`
+- `leg.targetUp` - the `b` value of the `Slerp`
+- `leg.rawUp` - the up vector used in lean rotation calculations within the update loop
+- `leg.isStepping` - this just prevents the code from resetting the values when it's mid-step
 
 #### InterpolateLeg()
 
+This isn't actually a function but rather a coroutine. This can technically be replaced with a thread but there really isn't a reason to.
+
+```csharp
+IEnumerator InterpolateLeg(Leg leg) { ... }
+```
+
+There is only one input `Leg leg` which is just the leg that we want to do the step. Technically there are others but they are just contained within the `Leg` class.
+
+Before we start the interpolation, we need to initialize some variables.
+
+```csharp
+float t = 0f;
+float localStepTime = stepTime;
+```
+
+`t` is our value which is slowly going to approach `1` linearly. `localStepTime` is set to what `stepTime` is at the time of the step starting as `stepTime` changes with velocity.
+
+##### While Loop
+
+For those who don't know what coroutines are, they essentially act as threads but run sequentially with other scripts. This means that it can run a while loop but it doesn't work like a thread where they are completely run in parallel. For example, if a while loop is stuck using a `while (true) { ... }` or something similar, everything will freeze unless there is a return inside of the loop. An example of a type of return is the `yield return null;` this essentially just waits 1 frame continues with the loop.
+
+Anyways, our code is wrapped around `while (t < 1f) { ... }`. We bound our `t` value to between `0` and `1` since lerps and slerps both use that range.  
+
+First, we need to talk about how we calculate `t`. Within this loop, we calculate `t` as so:
+
+```csharp
+t = Mathf.Min(1f, (Time.time - leg.startInterpolationTime) / localStepTime);
+```
+
+Essentially, what we are doing here is calculating `Time.time - leg.startInterpolationTime` which gives us the time elapsed since the start of the step. Then we divide it by `localStepTime` which fuzzily bounds the range to $[0,1]$. Then we use `Mathf.Min` to ensure that we don't overshoot.
+
+```csharp
+float height = legStepHeightCurve.Evaluate(t);
+
+Vector3 targetPos = Vector3.Lerp(leg.startPosition, leg.targetPosition, t) + body.up * height;
+
+Quaternion startRot = Quaternion.LookRotation(leg.leg.target.forward, leg.startUp);
+Quaternion endRot = Quaternion.LookRotation(leg.leg.target.forward, leg.targetUp);
+
+Quaternion rot = Quaternion.Slerp(startRot, endRot, t);
+
+Vector3 targetUp = rot * Vector3.up;
+
+leg.leg.target.position = targetPos;
+leg.leg.target.up = targetUp;
+
+yield return null;
+```
+
+The first line just uses our animation curve to calculate the height of the leg from off the ground. We use this scalar height value then just multiply it by `body.up` and add it to the lerped position to get our current IK target position. Rotation is somewhat similar but we just use Quaternions to do the same. We first define our start and end quaternions using `Quaternion.LookRotation` which creates a quaternion given a forward and upward vector. The last part of the while loop just applies our interpolated values then waits until the next frame to do the same once again.
+
+##### Cleanup
+
+```csharp
+if (++stepsCompleted >= numSteps) {
+    groupOneMoving = !groupOneMoving;
+    stepsCompleted = 0;
+    numSteps = 0;
+}
+
+leg.isStepping = false;
+```
+
+The cleanup isn't much for this. We just need to reset the counter if this is the last leg of the leg group then just reset its `isStepping` boolean so it works for the next step.
+
 #### CalculateBodyPosition()
+
+These next two functions are fairly math heavy but the code should be fairly simple to understand.
+
+```csharp
+void CalculateBodyPosition() { ... }
+```
+
+##### Solving for the Midpoint
+
+I want to start with our approach. What we want to do is try to find the intersection of the two vectors that are flat against a plane constructed with `body.forward` and `body.right` as their axes. Once we get this point of intersection (POI), we can then project it back onto the non-flattened vectors to find their desired heights. Using these heights, we take their average then add an offset for further tweaking. This is the gist of what we are trying to do but here's the math if you're curious. 
+
+First let's define our variables:
+
+- $\vec p, \vec q$ - Vectors constructed using $p_1,p_2,q_1$ and $q_2$
+- $\vec a, \vec b$ - $\vec p,\vec q$ projected onto the plane orthogonal to `body.up`
+
+Projecting the vectors onto the plane is fairly simple. We just need to remove the `body.up` component of the vector. To do this, we can project a vector $\vec v$ onto `body.up` (we'll refer to this as $\vec u$ from now on) and get the $\vec u$ component of it. We just need to subtract this value from $\vec v$ to get the projected vector. 
+$$
+\vec a=\vec p-\frac{\vec u\cdot\vec p}{|\vec u|^2}\vec u
+$$
+
+$$
+\vec b=\vec q-\frac{\vec u\cdot\vec p}{|\vec u|^2}\vec u
+$$
+
+
+
+Next we need to localize these vectors into the body's coordinate frame. We do this by using the three vectors, `body.up`, `body.right` and `body.forward`. This is fairly simple and just requires us to do a few dot products. Since `body.up` is $\vec u$, `body.right` and `body.forward` will be named $\vec r$ and $\vec f$ respectively. You will need to do this for $\vec p,\vec q, \vec a$ and $\vec b$. As an example, here's $\vec p$ localized:
+$$
+\vec p_L=\{\vec p\cdot\vec r,\vec p\cdot\vec u,\vec p\cdot\vec f\}
+$$
+Now we should solve for the POI of $\vec a$ and $\vec b$. To do this, we can just pretend the forward axis is a y-axis. Using the vector definition and the point version of the, we can derive an equation to define a line like so:
+$$
+\vec p=\vec mt+\vec p_0
+$$
+
+$$
+y=\frac{m_y}{m_x}(x-x_0)+y_0
+$$
+
+We just need to solve for the $x$ value when we repeat this for $\vec q$ as we will have two equations then. Here's the code for the math:
+
+```csharp
+Vector3 localizeVector(Vector3 right, Vector3 up, Vector3 forward, Vector3 v) {
+    return new Vector3(
+    	Vector3.Dot(right, v),
+        Vector3.Dot(up, v),
+        Vector3.Dot(forward, v)
+    );
+}
+
+Vector3 localizeVector(Transform t, Vector3 v) {
+	return localizeVector(t.right, t.up, t.forward, v);	
+}
+```
+
+The function above was something I forgot to mention since it is only really used in this function. There isn't really a need for it but it makes the code somewhat more readable.
+
+```csharp
+Vector3 p = rr.position - lf.position;
+Vector3 q = lr.position - rf.position;
+
+Vector3 pLocal = localizeVector(body, p);
+Vector3 qLocal = localizeVector(body, q);
+
+Vector3 lfLocal = localizeVector(body, lf);
+Vector3 rfLocal = localizeVector(body, rf);
+
+Vector3 a = localizeVector(body, Vector3.ProjectOnPlane(p, body.up));
+Vector3 b = localizeVector(body, Vector3.ProjectOnPlane(q, body.up));
+
+float aSlope = a.z / a.x;
+float bSlope = b.z / b.x;
+
+float x = (aSlope * lfLocal.x - bSlope * rfLocal.x + rfLocal.z - lfLocal.z) / (aSlope - bSlope);
+
+float tP = x / pLocal.x;
+float tQ = x / qLocal.x;
+
+float yP = tP * pLocal.y;
+float yQ = tQ * qLocal.y;
+
+float avgY = (yP + yQ) / 2f;
+
+if (onGround)
+    body.localPosition = Vector3.up * (avgY + distToLegCentre);
+```
+
+This code is quite long so I'll list out each step to hopefully make it easier to understand:
+
+1. The first two lines define the `p` and `q` vectors using our four points.
+2. Store and localize these vectors so we can isolate the `body.up` component of the vector for other calculations.
+3. Store and localize the initial points of the vectors to correctly calculate the `x` value of the intersection. 
+4. Create two new vectors `a` and `b` which are the vectors that we calculate the intersection of.
+5. Store the slopes of these vectors and calculate the `x` component of the intersection.
+6. Use this `x` value to calculate the `t` value along each of the original localized vectors.
+7. Get the `y` component of the intersection on each vector.
+8. Average these `y` values to get the midpoint between the intersections.
+9. Use this calculated average along with the `distToLegCentre` variable and apply it onto the body's local height.
 
 #### CalculateBodyTilt()
 
+```csharp
+void CalculateBodyTilt() { ... }
+```
+
+The approach I took was to create a plane of best fit for the four points. Using this plane we want rotate the body so that `body.up` becomes equal with the normal of the plane. Since I'm not experienced enough in data science (and I think it might be too expensive), I decided to approximate the plane of best fit by using averages. This method is probably more annoying to code but it should be less expensive. 
+
+To start, we need to grab 4 normal vectors from the legs. **Make sure that they all face in the same direction.** I don't mean that they are all equal but I mean more than they lie on the same side of the plane. Averaging these vectors we get a normal vector that somewhat encompasses all four normal vectors.
+
+```csharp
+Vector3 norm1 = Vector3.Cross(lf.position - rf.position, rr.position - rf.position).normalized;
+Vector3 norm2 = Vector3.Cross(rf.position - rr.position, lr.position - rr.position).normalized;
+Vector3 norm3 = Vector3.Cross(rr.position - lr.position, lf.position - lr.position).normalized;
+Vector3 norm4 = Vector3.Cross(lr.position - lf.position, rf.position - lf.position).normalized;
+
+Vector3 avg = (norm1 + norm2 + norm3 + norm4) / 4;
+```
+
+The following lines rotate the body to fit the plane. To do this we need to get two vectors, a forward vector and an up vector. Since `body.forward` isn't necessarily orthogonal to the plane's normal vector, we have to project the `body.forward` onto the plane.
+
 #### legsInitialized()
 
+```csharp
+bool legsInitialized() {
+    foreach (Leg l in leftLegs) if (!l.initialized) return false;
+    foreach (Leg r in rightLegs) if (!r.initialized) return false;
+    return true;
+}
+```
+
+This function is pretty simple and it just returns whether all legs are initialized.
